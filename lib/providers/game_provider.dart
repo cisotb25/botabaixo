@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:flutter/foundation.dart';
 import 'package:uuid/uuid.dart';
 import '../models/player.dart';
@@ -77,8 +78,11 @@ class GameProvider extends ChangeNotifier {
     final challenges = <RoundChallenge>[];
     final numChallenges = players.length * 2; // 2 challenges per player
 
+    // Shuffle players for random order
+    final shuffledPlayers = List<Player>.from(players)..shuffle(Random());
+
     for (int i = 0; i < numChallenges; i++) {
-      final player = players[i % players.length];
+      final player = shuffledPlayers[i % shuffledPlayers.length];
       final challenge = ChallengeService.getRandomChallenge();
 
       if (challenge != null) {
