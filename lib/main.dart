@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'providers/player_provider.dart';
 import 'providers/game_provider.dart';
+import 'providers/group_provider.dart';
 import 'services/storage_service.dart';
 import 'services/challenge_service.dart';
 import 'utils/logger.dart';
@@ -31,6 +32,7 @@ class BotabaixoApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => PlayerProvider()),
         ChangeNotifierProvider(create: (_) => GameProvider()),
+        ChangeNotifierProvider(create: (_) => GroupProvider()),
       ],
       child: MaterialApp(
         title: 'Botabaixo',

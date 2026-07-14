@@ -2,9 +2,11 @@ import 'package:hive_flutter/hive_flutter.dart';
 import '../models/player.dart';
 import '../models/challenge.dart';
 import '../models/game_round.dart';
+import '../models/player_group.dart';
 import '../models/player_adapter.dart';
 import '../models/challenge_adapter.dart';
 import '../models/game_round_adapter.dart';
+import '../models/player_group_adapter.dart';
 import 'firebase_service.dart';
 import '../utils/logger.dart';
 
@@ -13,6 +15,7 @@ class StorageService {
   static const String challengesBox = 'challenges';
   static const String gameRoundsBox = 'game_rounds';
   static const String settingsBox = 'settings';
+  static const String groupsBox = 'groups';
 
   static Future<void> init() async {
     await Hive.initFlutter();
@@ -22,12 +25,14 @@ class StorageService {
     Hive.registerAdapter(ChallengeAdapter());
     Hive.registerAdapter(GameRoundAdapter());
     Hive.registerAdapter(RoundChallengeAdapter());
+    Hive.registerAdapter(PlayerGroupAdapter());
 
     // Open boxes
     await Hive.openBox<Player>(playersBox);
     await Hive.openBox<Challenge>(challengesBox);
     await Hive.openBox<GameRound>(gameRoundsBox);
     await Hive.openBox(settingsBox);
+    await Hive.openBox<PlayerGroup>(groupsBox);
   }
 
   // Player operations
@@ -140,6 +145,32 @@ class StorageService {
     await getChallengesBox().clear();
     await getGameRoundsBox().clear();
     await getSettingsBox().clear();
+    await getGroupsBox().clear();
+  }
+
+  // Group operations
+  static Box<PlayerGroup> getGroupsBox() {
+    return Hive.box<PlayerGroup>(groupsBox);
+  }
+
+  static List<PlayerGroup> getAllGroups() {
+    return getGroupsBox().values.toList();
+  }
+
+  static Future<void> addGroup(PlayerGroup group) async {
+    await getGroupsBox().put(group.id, group);
+  }
+
+  static Future<void> updateGroup(PlayerGroup group) async {
+    await getGroupsBox().put(group.id, group);
+  }
+
+  static Future<void> deleteGroup(String id) async {
+    await getGroupsBox().delete(id);
+  }
+
+  static PlayerGroup? getGroup(String id) {
+    return getGroupsBox().get(id);
   }
 
   // Sync with Firebase

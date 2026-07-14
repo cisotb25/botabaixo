@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/player_provider.dart';
+import '../providers/group_provider.dart';
 import '../models/player.dart';
 import 'players_screen.dart';
+import 'groups_screen.dart';
 import 'game_screen.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -87,6 +89,25 @@ class HomeScreen extends StatelessWidget {
               ),
               const SizedBox(height: 16),
 
+              // Manage Groups Button
+              OutlinedButton.icon(
+                onPressed: () => _navigateToGroups(context),
+                icon: const Icon(Icons.group, size: 24),
+                label: const Text(
+                  'Gerenciar Grupos',
+                  style: TextStyle(fontSize: 16),
+                ),
+                style: OutlinedButton.styleFrom(
+                  foregroundColor: const Color(0xFFFF6D00),
+                  side: const BorderSide(color: Color(0xFFFF6D00)),
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16),
+
               // Player Count
               Consumer<PlayerProvider>(
                 builder: (context, playerProvider, child) {
@@ -111,6 +132,13 @@ class HomeScreen extends StatelessWidget {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => const PlayersScreen()),
+    );
+  }
+
+  void _navigateToGroups(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const GroupsScreen()),
     );
   }
 
@@ -144,7 +172,7 @@ class HomeScreen extends StatelessWidget {
         backgroundColor: const Color(0xFF1E1E1E),
         title: const Text('Nenhum jogador'),
         content: const Text(
-          'Adicione pelo menos um jogador para começar a jogar!',
+          'Adicione pelo menos um jogador para comecar a jogar!',
         ),
         actions: [
           TextButton(
@@ -183,9 +211,9 @@ class _PlayerSelectionSheetState extends State<_PlayerSelectionSheet> {
   @override
   Widget build(BuildContext context) {
     return DraggableScrollableSheet(
-      initialChildSize: 0.7,
+      initialChildSize: 0.85,
       minChildSize: 0.5,
-      maxChildSize: 0.9,
+      maxChildSize: 0.95,
       expand: false,
       builder: (context, scrollController) {
         return Column(
@@ -209,6 +237,56 @@ class _PlayerSelectionSheetState extends State<_PlayerSelectionSheet> {
                 style: Theme.of(context).textTheme.titleLarge,
               ),
             ),
+
+            // Groups section
+            Consumer<GroupProvider>(
+              builder: (context, groupProvider, child) {
+                if (groupProvider.groups.isEmpty) {
+                  return const SizedBox.shrink();
+                }
+
+                return SizedBox(
+                  height: 50,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    itemCount: groupProvider.groups.length,
+                    itemBuilder: (context, index) {
+                      final group = groupProvider.groups[index];
+                      return Padding(
+                        padding: const EdgeInsets.only(right: 8),
+                        child: ActionChip(
+                          avatar: const Icon(Icons.group, size: 18),
+                          label: Text(group.name),
+                          backgroundColor: const Color(0xFFFF6D00).withValues(alpha: 0.2),
+                          labelStyle: const TextStyle(color: Color(0xFFFF6D00)),
+                          side: const BorderSide(color: Color(0xFFFF6D00)),
+                          onPressed: () {
+                            setState(() {
+                              // Toggle all players in group
+                              final allSelected = group.playerIds
+                                  .every((id) => _selectedPlayerIds.contains(id));
+                              if (allSelected) {
+                                // Deselect all in group
+                                for (final id in group.playerIds) {
+                                  _selectedPlayerIds.remove(id);
+                                }
+                              } else {
+                                // Select all in group
+                                for (final id in group.playerIds) {
+                                  _selectedPlayerIds.add(id);
+                                }
+                              }
+                            });
+                          },
+                        ),
+                      );
+                    },
+                  ),
+                );
+              },
+            ),
+            const SizedBox(height: 8),
 
             // Player list
             Expanded(
