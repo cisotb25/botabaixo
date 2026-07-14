@@ -5,6 +5,8 @@ import '../models/game_round.dart';
 import '../models/player_adapter.dart';
 import '../models/challenge_adapter.dart';
 import '../models/game_round_adapter.dart';
+import 'firebase_service.dart';
+import '../utils/logger.dart';
 
 class StorageService {
   static const String playersBox = 'players';
@@ -39,14 +41,20 @@ class StorageService {
 
   static Future<void> addPlayer(Player player) async {
     await getPlayersBox().put(player.id, player);
+    // Sync to Firebase
+    await FirebaseService.syncPlayer(player);
   }
 
   static Future<void> updatePlayer(Player player) async {
     await getPlayersBox().put(player.id, player);
+    // Sync to Firebase
+    await FirebaseService.syncPlayer(player);
   }
 
   static Future<void> deletePlayer(String id) async {
     await getPlayersBox().delete(id);
+    // Delete from Firebase
+    await FirebaseService.deletePlayer(id);
   }
 
   static Player? getPlayer(String id) {
@@ -95,10 +103,14 @@ class StorageService {
 
   static Future<void> addGameRound(GameRound round) async {
     await getGameRoundsBox().put(round.id, round);
+    // Sync to Firebase
+    await FirebaseService.syncGameRound(round);
   }
 
   static Future<void> updateGameRound(GameRound round) async {
     await getGameRoundsBox().put(round.id, round);
+    // Sync to Firebase
+    await FirebaseService.syncGameRound(round);
   }
 
   static Future<void> deleteGameRound(String id) async {
@@ -128,5 +140,19 @@ class StorageService {
     await getChallengesBox().clear();
     await getGameRoundsBox().clear();
     await getSettingsBox().clear();
+  }
+
+  // Sync with Firebase
+  static Future<void> syncWithFirebase() async {
+    if (!FirebaseService.isAuthenticated) return;
+
+    try {
+      await FirebaseService.syncAllData(
+        localPlayers: getAllPlayers(),
+        localRounds: getAllGameRounds(),
+      );
+    } catch (e) {
+      AppLogger.error('Error during sync', e);
+    }
   }
 }
