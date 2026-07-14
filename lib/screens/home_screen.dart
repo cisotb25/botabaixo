@@ -1,0 +1,280 @@
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../providers/player_provider.dart';
+import '../models/player.dart';
+import 'players_screen.dart';
+import 'game_screen.dart';
+
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(24.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              // Header
+              const Spacer(),
+              const Text(
+                '🎮',
+                style: TextStyle(fontSize: 80),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 16),
+              Text(
+                'Botabaixo',
+                style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 8),
+              Text(
+                'Jogo de bebida open-source',
+                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                      color: Colors.grey[400],
+                    ),
+                textAlign: TextAlign.center,
+              ),
+              const Spacer(),
+
+              // Start Game Button
+              Consumer<PlayerProvider>(
+                builder: (context, playerProvider, child) {
+                  final hasPlayers = playerProvider.players.isNotEmpty;
+
+                  return ElevatedButton.icon(
+                    onPressed: hasPlayers
+                        ? () => _startGame(context, playerProvider)
+                        : () => _showNoPlayersDialog(context),
+                    icon: const Icon(Icons.play_arrow, size: 28),
+                    label: Text(
+                      hasPlayers ? 'Iniciar Jogo' : 'Adicione Jogadores',
+                      style: const TextStyle(fontSize: 18),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: hasPlayers
+                          ? const Color(0xFF6A1B9A)
+                          : Colors.grey[800],
+                      padding: const EdgeInsets.symmetric(vertical: 20),
+                    ),
+                  );
+                },
+              ),
+              const SizedBox(height: 16),
+
+              // Manage Players Button
+              OutlinedButton.icon(
+                onPressed: () => _navigateToPlayers(context),
+                icon: const Icon(Icons.people, size: 24),
+                label: const Text(
+                  'Gerenciar Jogadores',
+                  style: TextStyle(fontSize: 16),
+                ),
+                style: OutlinedButton.styleFrom(
+                  foregroundColor: const Color(0xFF00BFA5),
+                  side: const BorderSide(color: Color(0xFF00BFA5)),
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16),
+
+              // Player Count
+              Consumer<PlayerProvider>(
+                builder: (context, playerProvider, child) {
+                  return Text(
+                    '${playerProvider.players.length} jogador(es) cadastrado(s)',
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: Colors.grey[500],
+                        ),
+                    textAlign: TextAlign.center,
+                  );
+                },
+              ),
+              const Spacer(),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _navigateToPlayers(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const PlayersScreen()),
+    );
+  }
+
+  void _startGame(BuildContext context, PlayerProvider playerProvider) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: const Color(0xFF1E1E1E),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (context) => _PlayerSelectionSheet(
+        players: playerProvider.players,
+        onPlayersSelected: (selectedPlayers) {
+          Navigator.pop(context);
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => GameScreen(players: selectedPlayers),
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  void _showNoPlayersDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        backgroundColor: const Color(0xFF1E1E1E),
+        title: const Text('Nenhum jogador'),
+        content: const Text(
+          'Adicione pelo menos um jogador para começar a jogar!',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Cancelar'),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+              _navigateToPlayers(context);
+            },
+            child: const Text('Adicionar Jogadores'),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _PlayerSelectionSheet extends StatefulWidget {
+  final List<Player> players;
+  final Function(List<Player>) onPlayersSelected;
+
+  const _PlayerSelectionSheet({
+    required this.players,
+    required this.onPlayersSelected,
+  });
+
+  @override
+  State<_PlayerSelectionSheet> createState() => _PlayerSelectionSheetState();
+}
+
+class _PlayerSelectionSheetState extends State<_PlayerSelectionSheet> {
+  final Set<String> _selectedPlayerIds = {};
+
+  @override
+  Widget build(BuildContext context) {
+    return DraggableScrollableSheet(
+      initialChildSize: 0.7,
+      minChildSize: 0.5,
+      maxChildSize: 0.9,
+      expand: false,
+      builder: (context, scrollController) {
+        return Column(
+          children: [
+            // Handle
+            Container(
+              margin: const EdgeInsets.only(top: 12),
+              width: 40,
+              height: 4,
+              decoration: BoxDecoration(
+                color: Colors.grey[600],
+                borderRadius: BorderRadius.circular(2),
+              ),
+            ),
+
+            // Title
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Text(
+                'Selecione os Jogadores',
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
+            ),
+
+            // Player list
+            Expanded(
+              child: ListView.builder(
+                controller: scrollController,
+                itemCount: widget.players.length,
+                itemBuilder: (context, index) {
+                  final player = widget.players[index];
+                  final isSelected = _selectedPlayerIds.contains(player.id);
+
+                  return CheckboxListTile(
+                    value: isSelected,
+                    onChanged: (value) {
+                      setState(() {
+                        if (value == true) {
+                          _selectedPlayerIds.add(player.id);
+                        } else {
+                          _selectedPlayerIds.remove(player.id);
+                        }
+                      });
+                    },
+                    title: Text(player.name),
+                    subtitle: Text(player.pronounPT),
+                    secondary: CircleAvatar(
+                      backgroundColor: isSelected
+                          ? const Color(0xFF6A1B9A)
+                          : Colors.grey[800],
+                      child: Text(
+                        player.name[0].toUpperCase(),
+                        style: const TextStyle(color: Colors.white),
+                      ),
+                    ),
+                    activeColor: const Color(0xFF6A1B9A),
+                  );
+                },
+              ),
+            ),
+
+            // Start button
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: ElevatedButton(
+                onPressed: _selectedPlayerIds.isNotEmpty
+                    ? () {
+                        final selectedPlayers = widget.players
+                            .where(
+                                (p) => _selectedPlayerIds.contains(p.id))
+                            .toList();
+                        widget.onPlayersSelected(selectedPlayers);
+                      }
+                    : null,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: _selectedPlayerIds.isNotEmpty
+                      ? const Color(0xFF6A1B9A)
+                      : Colors.grey[800],
+                  minimumSize: const Size(double.infinity, 50),
+                ),
+                child: Text(
+                  'Iniciar com ${_selectedPlayerIds.length} jogador(es)',
+                  style: const TextStyle(fontSize: 16),
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+}

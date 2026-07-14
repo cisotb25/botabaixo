@@ -1,0 +1,164 @@
+{
+  "challenges": [
+    {
+      "id": "1",
+      "category": "bebida",
+      "difficulty": "facil",
+      "shots": 1,
+      "text_pt": "Beba um gole",
+      "text_en": "Take a sip"
+    },
+    {
+      "id": "2",
+      "category": "bebida",
+      "difficulty": "facil",
+      "shots": 1,
+      "text_pt": "Brinde com alguém",
+      "text_en": "Toast with someone"
+    },
+    {
+      "id": "3",
+      "category": "bebida",
+      "difficulty": "facil",
+      "shots": 1,
+      "text_pt": "Faça um brinde criativo",
+      "text_en": "Make a creative toast"
+    },
+    {
+      "id": "4",
+      "category": "bebida",
+      "difficulty": "medio",
+      "shots": 2,
+      "text_pt": "Beba dois goles",
+      "text_en": "Take two sips"
+    },
+    {
+      "id": "5",
+      "category": "verdade",
+      "difficulty": "medio",
+      "shots": 2,
+      "text_pt": "Qual foi a sua maior vergonha?",
+      "text_en": "What's your biggest embarrassment?"
+    },
+    {
+      "id": "6",
+      "category": "verdade",
+      "difficulty": "medio",
+      "shots": 2,
+      "text_pt": "Conte uma mentira que já contou",
+      "text_en": "Tell a lie you've told"
+    },
+    {
+      "id": "7",
+      "category": "verdade",
+      "difficulty": "medio",
+      "shots": 2,
+      "text_pt": "Qual é o seu maior medo?",
+      "text_en": "What's your biggest fear?"
+    },
+    {
+      "id": "8",
+      "category": "coragem",
+      "difficulty": "dificil",
+      "shots": 3,
+      "text_pt": "Imite um animal por 30 segundos",
+      "text_en": "Imitate an animal for 30 seconds"
+    },
+    {
+      "id": "9",
+      "category": "coragem",
+      "difficulty": "dificil",
+      "shots": 3,
+      "text_pt": "Cante uma música popular",
+      "text_en": "Sing a popular song"
+    },
+    {
+      "id": "10",
+      "category": "coragem",
+      "difficulty": "dificil",
+      "shots": 3,
+      "text_pt": "Faça uma dança ridícula",
+      "text_en": "Do a ridiculous dance"
+    },
+    {
+      "id": "11",
+      "category": "grupo",
+      "difficulty": "extremo",
+      "shots": 4,
+      "text_pt": "Todos bebem!",
+      "text_en": "Everyone drinks!"
+    },
+    {
+      "id": "12",
+      "category": "grupo",
+      "difficulty": "extremo",
+      "shots": 4,
+      "text_pt": "O grupo escolhe quem bebe",
+      "text_en": "The group chooses who drinks"
+    },
+    {
+      "id": "13",
+      "category": "grupo",
+      "difficulty": "extremo",
+      "shots": 4,
+      "text_pt": "Todos fazem uma rodada de shots",
+      "text_en": "Everyone does a round of shots"
+    },
+    {
+      "id": "14",
+      "category": "bebida",
+      "difficulty": "facil",
+      "shots": 1,
+      "text_pt": "Tome um drink diferente",
+      "text_en": "Take a different drink"
+    },
+    {
+      "id": "15",
+      "category": "bebida",
+      "difficulty": "medio",
+      "shots": 2,
+      "text_pt": "Misture duas bebidas e beba",
+      "text_en": "Mix two drinks and have them"
+    },
+    {
+      "id": "16",
+      "category": "verdade",
+      "difficulty": "dificil",
+      "shots": 3,
+      "text_pt": "Revele algo que ninguém sabe sobre você",
+      "text_en": "Reveal something no one knows about you"
+    },
+    {
+      "id": "17",
+      "category": "coragem",
+      "difficulty": "dificil",
+      "shots": 3,
+      "text_pt": "Ligue para alguém e diga 'eu te amo'",
+      "text_en": "Call someone and say 'I love you'"
+    },
+    {
+      "id": "18",
+      "category": "coragem",
+      "difficulty": "facil",
+      "shots": 1,
+      "text_pt": "Poste algo engraçado nas redes sociais",
+      "text_en": "Post something funny on social media"
+    },
+    {
+      "id": "19",
+      "category": "grupo",
+      "difficulty": "extremo",
+      "shots": 4,
+      "text_pt": "O último a chegar na mesa bebe",
+      "text_en": "The last one to arrive at the table drinks"
+    },
+    {
+      "id": "20",
+      "category": "bebida",
+      "difficulty": "facil",
+      "shots": 1,
+      "text_pt": "Escolha alguém para beber com você",
+      "text_en": "Choose someone to drink with you"
+    }
+  ]
+}
