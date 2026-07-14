@@ -5,7 +5,6 @@ import 'providers/player_provider.dart';
 import 'providers/game_provider.dart';
 import 'services/storage_service.dart';
 import 'services/challenge_service.dart';
-import 'services/firebase_service.dart';
 import 'utils/logger.dart';
 import 'screens/home_screen.dart';
 
@@ -15,18 +14,10 @@ void main() async {
   // Initialize local storage
   await StorageService.init();
 
-  // Initialize Firebase (wrapped in try-catch for offline mode)
-  try {
-    await FirebaseService.init();
-    // Sync data after Firebase is ready
-    await StorageService.syncWithFirebase();
-  } catch (e) {
-    // Firebase not configured - app will work offline
-    AppLogger.info('Firebase not available, running in offline mode: $e');
-  }
-
   // Load challenges
   await ChallengeService.loadChallenges();
+
+  AppLogger.info('Botabaixo started successfully');
 
   runApp(const BotabaixoApp());
 }
