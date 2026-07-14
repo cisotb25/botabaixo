@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:uuid/uuid.dart';
 import '../models/player.dart';
 import '../models/game_round.dart';
+import '../models/game_mode.dart';
 import '../services/storage_service.dart';
 import '../services/challenge_service.dart';
 
@@ -12,12 +13,14 @@ class GameProvider extends ChangeNotifier {
   bool _isLoading = false;
   String? _error;
   int _currentChallengeIndex = 0;
+  GameMode _currentGameMode = GameMode.normal;
 
   GameRound? get currentRound => _currentRound;
   List<GameRound> get gameHistory => _gameHistory;
   bool get isLoading => _isLoading;
   String? get error => _error;
   int get currentChallengeIndex => _currentChallengeIndex;
+  GameMode get currentGameMode => _currentGameMode;
 
   GameProvider() {
     loadGameHistory();
@@ -33,15 +36,16 @@ class GameProvider extends ChangeNotifier {
       _isLoading = false;
       notifyListeners();
     } catch (e) {
-      _error = 'Erro ao carregar histórico: $e';
+      _error = 'Erro ao carregar historico: $e';
       _isLoading = false;
       notifyListeners();
     }
   }
 
-  Future<void> startNewRound(List<Player> players) async {
+  Future<void> startNewRound(List<Player> players, {GameMode mode = GameMode.normal}) async {
     _isLoading = true;
     _error = null;
+    _currentGameMode = mode;
     notifyListeners();
 
     try {
@@ -54,8 +58,8 @@ class GameProvider extends ChangeNotifier {
         await ChallengeService.loadChallenges();
       }
 
-      // Generate initial challenges for the round
-      final challenges = _generateChallengesForRound(players);
+      // Generate challenges based on game mode
+      final challenges = _generateChallengesForRound(players, mode);
 
       _currentRound = GameRound(
         id: const Uuid().v4(),
@@ -74,9 +78,10 @@ class GameProvider extends ChangeNotifier {
     }
   }
 
-  List<RoundChallenge> _generateChallengesForRound(List<Player> players) {
+  List<RoundChallenge> _generateChallengesForRound(List<Player> players, GameMode mode) {
     final challenges = <RoundChallenge>[];
-    final numChallenges = players.length * 2; // 2 challenges per player
+    final config = GameModeConfig.getConfig(mode);
+    final numChallenges = config.getTotalChallenges(players.length);
 
     // Shuffle players for random order
     final shuffledPlayers = List<Player>.from(players)..shuffle(Random());

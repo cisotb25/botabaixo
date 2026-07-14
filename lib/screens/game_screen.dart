@@ -4,11 +4,17 @@ import 'package:provider/provider.dart';
 import '../providers/game_provider.dart';
 import '../models/player.dart';
 import '../models/game_round.dart';
+import '../models/game_mode.dart';
 
 class GameScreen extends StatefulWidget {
   final List<Player> players;
+  final GameMode gameMode;
 
-  const GameScreen({super.key, required this.players});
+  const GameScreen({
+    super.key,
+    required this.players,
+    this.gameMode = GameMode.normal,
+  });
 
   @override
   State<GameScreen> createState() => _GameScreenState();
@@ -19,7 +25,9 @@ class _GameScreenState extends State<GameScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<GameProvider>().startNewRound(widget.players);
+      context
+          .read<GameProvider>()
+          .startNewRound(widget.players, mode: widget.gameMode);
     });
   }
 

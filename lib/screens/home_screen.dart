@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import '../providers/player_provider.dart';
 import '../providers/group_provider.dart';
 import '../models/player.dart';
+import '../models/game_mode.dart';
 import 'players_screen.dart';
 import 'groups_screen.dart';
 import 'game_screen.dart';
@@ -150,14 +151,17 @@ class HomeScreen extends StatelessWidget {
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
-      builder: (context) => _PlayerSelectionSheet(
+      builder: (context) => _GameSetupSheet(
         players: playerProvider.players,
-        onPlayersSelected: (selectedPlayers) {
+        onGameStarted: (selectedPlayers, gameMode) {
           Navigator.pop(context);
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => GameScreen(players: selectedPlayers),
+              builder: (context) => GameScreen(
+                players: selectedPlayers,
+                gameMode: gameMode,
+              ),
             ),
           );
         },
@@ -192,27 +196,28 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-class _PlayerSelectionSheet extends StatefulWidget {
+class _GameSetupSheet extends StatefulWidget {
   final List<Player> players;
-  final Function(List<Player>) onPlayersSelected;
+  final Function(List<Player>, GameMode) onGameStarted;
 
-  const _PlayerSelectionSheet({
+  const _GameSetupSheet({
     required this.players,
-    required this.onPlayersSelected,
+    required this.onGameStarted,
   });
 
   @override
-  State<_PlayerSelectionSheet> createState() => _PlayerSelectionSheetState();
+  State<_GameSetupSheet> createState() => _GameSetupSheetState();
 }
 
-class _PlayerSelectionSheetState extends State<_PlayerSelectionSheet> {
+class _GameSetupSheetState extends State<_GameSetupSheet> {
   final Set<String> _selectedPlayerIds = {};
+  GameMode _selectedMode = GameMode.normal;
 
   @override
   Widget build(BuildContext context) {
     return DraggableScrollableSheet(
-      initialChildSize: 0.85,
-      minChildSize: 0.5,
+      initialChildSize: 0.9,
+      minChildSize: 0.7,
       maxChildSize: 0.95,
       expand: false,
       builder: (context, scrollController) {
@@ -233,10 +238,87 @@ class _PlayerSelectionSheetState extends State<_PlayerSelectionSheet> {
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Text(
-                'Selecione os Jogadores',
+                'Configurar Jogo',
                 style: Theme.of(context).textTheme.titleLarge,
               ),
             ),
+
+            // Game Mode Selection
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Modo de Jogo',
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                          color: Colors.grey[400],
+                        ),
+                  ),
+                  const SizedBox(height: 8),
+                  Row(
+                    children: GameModeConfig.allModes.map((config) {
+                      final isSelected = _selectedMode == config.mode;
+                      return Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                          child: GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                _selectedMode = config.mode;
+                              });
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(vertical: 12),
+                              decoration: BoxDecoration(
+                                color: isSelected
+                                    ? const Color(0xFF6A1B9A)
+                                    : Colors.grey[800],
+                                borderRadius: BorderRadius.circular(12),
+                                border: Border.all(
+                                  color: isSelected
+                                      ? const Color(0xFF6A1B9A)
+                                      : Colors.grey[600]!,
+                                ),
+                              ),
+                              child: Column(
+                                children: [
+                                  Text(
+                                    config.name,
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: isSelected
+                                          ? Colors.white
+                                          : Colors.grey[400],
+                                    ),
+                                  ),
+                                  const SizedBox(height: 4),
+                                  Text(
+                                    '${config.turnsPerPlayer}x',
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      color: isSelected
+                                          ? Colors.white70
+                                          : Colors.grey[500],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      );
+                    }).toList(),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    GameModeConfig.getConfig(_selectedMode).description,
+                    style: TextStyle(color: Colors.grey[500]),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 16),
 
             // Groups section
             Consumer<GroupProvider>(
@@ -258,21 +340,20 @@ class _PlayerSelectionSheetState extends State<_PlayerSelectionSheet> {
                         child: ActionChip(
                           avatar: const Icon(Icons.group, size: 18),
                           label: Text(group.name),
-                          backgroundColor: const Color(0xFFFF6D00).withValues(alpha: 0.2),
-                          labelStyle: const TextStyle(color: Color(0xFFFF6D00)),
+                          backgroundColor:
+                              const Color(0xFFFF6D00).withValues(alpha: 0.2),
+                          labelStyle:
+                              const TextStyle(color: Color(0xFFFF6D00)),
                           side: const BorderSide(color: Color(0xFFFF6D00)),
                           onPressed: () {
                             setState(() {
-                              // Toggle all players in group
-                              final allSelected = group.playerIds
-                                  .every((id) => _selectedPlayerIds.contains(id));
+                              final allSelected = group.playerIds.every(
+                                  (id) => _selectedPlayerIds.contains(id));
                               if (allSelected) {
-                                // Deselect all in group
                                 for (final id in group.playerIds) {
                                   _selectedPlayerIds.remove(id);
                                 }
                               } else {
-                                // Select all in group
                                 for (final id in group.playerIds) {
                                   _selectedPlayerIds.add(id);
                                 }
@@ -335,7 +416,7 @@ class _PlayerSelectionSheetState extends State<_PlayerSelectionSheet> {
                             .where(
                                 (p) => _selectedPlayerIds.contains(p.id))
                             .toList();
-                        widget.onPlayersSelected(selectedPlayers);
+                        widget.onGameStarted(selectedPlayers, _selectedMode);
                       }
                     : null,
                 style: ElevatedButton.styleFrom(
