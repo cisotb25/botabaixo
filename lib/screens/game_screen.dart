@@ -125,54 +125,43 @@ class _GameScreenState extends State<GameScreen> {
               valueColor: AlwaysStoppedAnimation<Color>(typeColor),
             ),
             const SizedBox(height: 8),
-            Text(
-              'Desafio ${gameProvider.currentChallengeIndex + 1} de ${gameProvider.currentRound!.challenges.length}',
-              style: TextStyle(color: Colors.grey[400]),
-            ),
-            const SizedBox(height: 16),
-
-            // Active viruses banner
-            if (gameProvider.activeViruses.isNotEmpty)
-              Container(
-                width: double.infinity,
-                margin: const EdgeInsets.only(bottom: 16),
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color: const Color(0xFF9C27B0).withValues(alpha: 0.2),
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: const Color(0xFF9C27B0)),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Desafio ${gameProvider.currentChallengeIndex + 1} de ${gameProvider.currentRound!.challenges.length}',
+                  style: TextStyle(color: Colors.grey[400], fontSize: 13),
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        const Text('🦠', style: TextStyle(fontSize: 20)),
-                        const SizedBox(width: 8),
-                        Text(
-                          'Virus Ativo${gameProvider.activeViruses.length > 1 ? 's' : ''}',
-                          style: const TextStyle(
-                            color: Color(0xFF9C27B0),
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 8),
-                    ...gameProvider.activeViruses.map((virus) => Padding(
-                      padding: const EdgeInsets.only(bottom: 4),
-                      child: Text(
-                        virus.text,
-                        style: const TextStyle(
-                          color: Colors.white70,
-                          fontSize: 13,
-                        ),
+                // Virus button
+                if (gameProvider.activeViruses.isNotEmpty)
+                  GestureDetector(
+                    onTap: () => _showVirusPopup(context, gameProvider),
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFF9C27B0).withValues(alpha: 0.3),
+                        borderRadius: BorderRadius.circular(12),
                       ),
-                    )),
-                  ],
-                ),
-              ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Text('🦠', style: TextStyle(fontSize: 14)),
+                          const SizedBox(width: 4),
+                          Text(
+                            'Virus (${gameProvider.activeViruses.length})',
+                            style: const TextStyle(
+                              color: Color(0xFF9C27B0),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 12,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+              ],
+            ),
+            const SizedBox(height: 20),
 
             // Player name
             Text(
@@ -183,47 +172,24 @@ class _GameScreenState extends State<GameScreen> {
                   ),
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: 20),
 
-            // Pronoun tag
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-              decoration: BoxDecoration(
-                color: typeColor.withValues(alpha: 0.3),
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: Text(
-                currentChallenge.assignedPlayer.pronounPT,
-                style: TextStyle(
-                  color: typeColor,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ),
-            const SizedBox(height: 24),
-
-            // Challenge card
+            // Challenge card with colored background
             Expanded(
               child: Card(
+                color: typeColor.withValues(alpha: 0.15),
                 child: Container(
                   width: double.infinity,
                   padding: const EdgeInsets.all(24),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      // Type icon
-                      Text(
-                        challenge.icon,
-                        style: const TextStyle(fontSize: 64),
-                      ),
-                      const SizedBox(height: 16),
-
                       // Type badge
                       Container(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 16, vertical: 8),
                         decoration: BoxDecoration(
-                          color: typeColor.withValues(alpha: 0.2),
+                          color: typeColor.withValues(alpha: 0.3),
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: Text(
@@ -236,14 +202,14 @@ class _GameScreenState extends State<GameScreen> {
                       ),
                       const SizedBox(height: 24),
 
-                      // Challenge text
+                      // Challenge text (slightly smaller)
                       Text(
                         challenge.getText(
                           currentChallenge.assignedPlayer.name,
                         ),
                         style: Theme.of(context)
                             .textTheme
-                            .headlineSmall
+                            .titleLarge
                             ?.copyWith(
                               fontWeight: FontWeight.w500,
                             ),
@@ -259,7 +225,7 @@ class _GameScreenState extends State<GameScreen> {
                             Icon(
                               Icons.local_bar,
                               color: typeColor,
-                              size: 32,
+                              size: 28,
                             ),
                             const SizedBox(width: 8),
                             Text(
@@ -281,7 +247,7 @@ class _GameScreenState extends State<GameScreen> {
                             const Icon(
                               Icons.redeem,
                               color: Color(0xFF00BFA5),
-                              size: 32,
+                              size: 28,
                             ),
                             const SizedBox(width: 8),
                             Text(
@@ -301,7 +267,7 @@ class _GameScreenState extends State<GameScreen> {
                           margin: const EdgeInsets.only(top: 16),
                           padding: const EdgeInsets.all(12),
                           decoration: BoxDecoration(
-                            color: const Color(0xFF9C27B0).withValues(alpha: 0.15),
+                            color: const Color(0xFF9C27B0).withValues(alpha: 0.2),
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: const Text(
@@ -309,6 +275,7 @@ class _GameScreenState extends State<GameScreen> {
                             style: TextStyle(
                               color: Color(0xFF9C27B0),
                               fontStyle: FontStyle.italic,
+                              fontSize: 13,
                             ),
                           ),
                         ),
@@ -319,7 +286,7 @@ class _GameScreenState extends State<GameScreen> {
                           margin: const EdgeInsets.only(top: 16),
                           padding: const EdgeInsets.all(12),
                           decoration: BoxDecoration(
-                            color: const Color(0xFFF44336).withValues(alpha: 0.15),
+                            color: const Color(0xFFF44336).withValues(alpha: 0.2),
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: const Text(
@@ -328,6 +295,7 @@ class _GameScreenState extends State<GameScreen> {
                               color: Color(0xFFF44336),
                               fontWeight: FontWeight.bold,
                               fontStyle: FontStyle.italic,
+                              fontSize: 13,
                             ),
                           ),
                         ),
@@ -336,19 +304,75 @@ class _GameScreenState extends State<GameScreen> {
                 ),
               ),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 12),
 
             // Tap hint
             Text(
-              'Toque em qualquer lugar para continuar',
+              'Toque para continuar',
               style: TextStyle(
                 color: Colors.grey[600],
-                fontSize: 14,
+                fontSize: 13,
               ),
             ),
-            const SizedBox(height: 8),
           ],
         ),
+      ),
+    );
+  }
+
+  void _showVirusPopup(BuildContext context, GameProvider gameProvider) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        backgroundColor: const Color(0xFF1E1E1E),
+        title: Row(
+          children: [
+            const Text('🦠', style: TextStyle(fontSize: 24)),
+            const SizedBox(width: 8),
+            Text(
+              'Virus Ativo${gameProvider.activeViruses.length > 1 ? 's' : ''}',
+              style: const TextStyle(color: Color(0xFF9C27B0)),
+            ),
+          ],
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: gameProvider.activeViruses.map((virus) => Padding(
+            padding: const EdgeInsets.only(bottom: 12),
+            child: Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: const Color(0xFF9C27B0).withValues(alpha: 0.15),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    virus.assignedPlayer.name,
+                    style: const TextStyle(
+                      color: Color(0xFF9C27B0),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 12,
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    virus.text,
+                    style: const TextStyle(color: Colors.white70),
+                  ),
+                ],
+              ),
+            ),
+          )).toList(),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Fechar'),
+          ),
+        ],
       ),
     );
   }
