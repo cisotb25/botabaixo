@@ -13,7 +13,7 @@
       "category": "bebida",
       "difficulty": "facil",
       "shots": 1,
-      "text_pt": "Brinde com alguém",
+      "text_pt": "Brinde com alguem",
       "text_en": "Toast with someone"
     },
     {
@@ -21,7 +21,7 @@
       "category": "bebida",
       "difficulty": "facil",
       "shots": 1,
-      "text_pt": "Faça um brinde criativo",
+      "text_pt": "Faca um brinde criativo",
       "text_en": "Make a creative toast"
     },
     {
@@ -45,7 +45,7 @@
       "category": "verdade",
       "difficulty": "medio",
       "shots": 2,
-      "text_pt": "Conte uma mentira que já contou",
+      "text_pt": "Conte uma mentira que ja contou",
       "text_en": "Tell a lie you've told"
     },
     {
@@ -53,7 +53,7 @@
       "category": "verdade",
       "difficulty": "medio",
       "shots": 2,
-      "text_pt": "Qual é o seu maior medo?",
+      "text_pt": "Qual e o seu maior medo?",
       "text_en": "What's your biggest fear?"
     },
     {
@@ -69,7 +69,7 @@
       "category": "coragem",
       "difficulty": "dificil",
       "shots": 3,
-      "text_pt": "Cante uma música popular",
+      "text_pt": "Cante uma musica popular",
       "text_en": "Sing a popular song"
     },
     {
@@ -77,7 +77,7 @@
       "category": "coragem",
       "difficulty": "dificil",
       "shots": 3,
-      "text_pt": "Faça uma dança ridícula",
+      "text_pt": "Faca uma danca ridicula",
       "text_en": "Do a ridiculous dance"
     },
     {
@@ -125,7 +125,7 @@
       "category": "verdade",
       "difficulty": "dificil",
       "shots": 3,
-      "text_pt": "Revele algo que ninguém sabe sobre você",
+      "text_pt": "Revele algo que ninguem sabe sobre voce",
       "text_en": "Reveal something no one knows about you"
     },
     {
@@ -133,7 +133,7 @@
       "category": "coragem",
       "difficulty": "dificil",
       "shots": 3,
-      "text_pt": "Ligue para alguém e diga 'eu te amo'",
+      "text_pt": "Ligue para alguem e diga 'eu te amo'",
       "text_en": "Call someone and say 'I love you'"
     },
     {
@@ -149,7 +149,7 @@
       "category": "grupo",
       "difficulty": "extremo",
       "shots": 4,
-      "text_pt": "O último a chegar na mesa bebe",
+      "text_pt": "O ultimo a chegar na mesa bebe",
       "text_en": "The last one to arrive at the table drinks"
     },
     {
@@ -157,8 +157,568 @@
       "category": "bebida",
       "difficulty": "facil",
       "shots": 1,
-      "text_pt": "Escolha alguém para beber com você",
+      "text_pt": "Escolha alguem para beber com voce",
       "text_en": "Choose someone to drink with you"
+    },
+    {
+      "id": "21",
+      "category": "verdade",
+      "difficulty": "medio",
+      "shots": 2,
+      "text_pt": "Qual e a coisa mais vergonhosa que ja fez em publico?",
+      "text_en": "What's the most embarrassing thing you've done in public?"
+    },
+    {
+      "id": "22",
+      "category": "coragem",
+      "difficulty": "dificil",
+      "shots": 3,
+      "text_pt": "Faca uma imitacao de alguem do grupo",
+      "text_en": "Imitate someone in the group"
+    },
+    {
+      "id": "23",
+      "category": "bebida",
+      "difficulty": "medio",
+      "shots": 2,
+      "text_pt": "Beba o que o jogador da sua esquerda escolher",
+      "text_en": "Drink what the player to your left chooses"
+    },
+    {
+      "id": "24",
+      "category": "grupo",
+      "difficulty": "extremo",
+      "shots": 4,
+      "text_pt": "Todos fazem circle e o centro bebe",
+      "text_en": "Everyone makes a circle and the center drinks"
+    },
+    {
+      "id": "25",
+      "category": "verdade",
+      "difficulty": "medio",
+      "shots": 2,
+      "text_pt": "Qual e a sua maior traição (nao necessariamente romantica)?",
+      "text_en": "What's your biggest betrayal (not necessarily romantic)?"
+    },
+    {
+      "id": "26",
+      "category": "coragem",
+      "difficulty": "dificil",
+      "shots": 3,
+      "text_pt": "Faca uma pose por 30 segundos e todo mundo tira foto",
+      "text_en": "Strike a pose for 30 seconds while everyone takes photos"
+    },
+    {
+      "id": "27",
+      "category": "bebida",
+      "difficulty": "facil",
+      "shots": 1,
+      "text_pt": "Troque de lugar com alguem",
+      "text_en": "Switch places with someone"
+    },
+    {
+      "id": "28",
+      "category": "grupo",
+      "difficulty": "dificil",
+      "shots": 3,
+      "text_pt": "Todos que ja beijaram alguem aqui bebem",
+      "text_en": "Everyone who has kissed someone here drinks"
+    },
+    {
+      "id": "29",
+      "category": "coragem",
+      "difficulty": "medio",
+      "shots": 2,
+      "text_pt": "Conte uma historia em 30 segundos",
+      "text_en": "Tell a story in 30 seconds"
+    },
+    {
+      "id": "30",
+      "category": "verdade",
+      "difficulty": "dificil",
+      "shots": 3,
+      "text_pt": "Qual e a mentira mais absurda que ja contou para seus pais?",
+      "text_en": "What's the most absurd lie you've told your parents?"
+    },
+    {
+      "id": "31",
+      "category": "bebida",
+      "difficulty": "medio",
+      "shots": 2,
+      "text_pt": "Beba um shot de algo que ninguem nunca provou",
+      "text_en": "Take a shot of something no one has ever tried"
+    },
+    {
+      "id": "32",
+      "category": "coragem",
+      "difficulty": "dificil",
+      "shots": 3,
+      "text_pt": "Faca sua melhor impression de um professor",
+      "text_en": "Do your best impression of a teacher"
+    },
+    {
+      "id": "33",
+      "category": "grupo",
+      "difficulty": "dificil",
+      "shots": 3,
+      "text_pt": "Todos que usam branco bebem",
+      "text_en": "Everyone wearing white drinks"
+    },
+    {
+      "id": "34",
+      "category": "verdade",
+      "difficulty": "medio",
+      "shots": 2,
+      "text_pt": "Qual e a musica que voce canta no chuveiro?",
+      "text_en": "What song do you sing in the shower?"
+    },
+    {
+      "id": "35",
+      "category": "bebida",
+      "difficulty": "facil",
+      "shots": 1,
+      "text_pt": "Coma um pedaco de limao",
+      "text_en": "Eat a piece of lemon"
+    },
+    {
+      "id": "36",
+      "category": "coragem",
+      "difficulty": "extremo",
+      "shots": 4,
+      "text_pt": "Ligue para seu ex e diga que sente falta",
+      "text_en": "Call your ex and say you miss them"
+    },
+    {
+      "id": "37",
+      "category": "grupo",
+      "difficulty": "dificil",
+      "shots": 3,
+      "text_pt": "O grupo escolhe a musica mais feia e todos cantam",
+      "text_en": "Group picks the ugliest song and everyone sings"
+    },
+    {
+      "id": "38",
+      "category": "verdade",
+      "difficulty": "medio",
+      "shots": 2,
+      "text_pt": "Qual e a coisa mais estranha que ja comeu?",
+      "text_en": "What's the weirdest thing you've ever eaten?"
+    },
+    {
+      "id": "39",
+      "category": "bebida",
+      "difficulty": "dificil",
+      "shots": 3,
+      "text_pt": "Beba sem usar as maos por 10 segundos",
+      "text_en": "Drink without using your hands for 10 seconds"
+    },
+    {
+      "id": "40",
+      "category": "coragem",
+      "difficulty": "medio",
+      "shots": 2,
+      "text_pt": "Faca uma careta e todo mundo tira foto",
+      "text_en": "Make a funny face and everyone takes a photo"
+    },
+    {
+      "id": "41",
+      "category": "grupo",
+      "difficulty": "extremo",
+      "shots": 5,
+      "text_pt": "Todos bebem 5 goles!",
+      "text_en": "Everyone takes 5 sips!"
+    },
+    {
+      "id": "42",
+      "category": "verdade",
+      "difficulty": "dificil",
+      "shots": 3,
+      "text_pt": "Qual e a coisa mais vergonhosa que ja pesquisou no Google?",
+      "text_en": "What's the most embarrassing thing you've Googled?"
+    },
+    {
+      "id": "43",
+      "category": "coragem",
+      "difficulty": "dificil",
+      "shots": 3,
+      "text_pt": "Faca sua melhor impression de um animal e deixe o grupo adivinhar",
+      "text_en": "Do your best animal impression and let the group guess"
+    },
+    {
+      "id": "44",
+      "category": "bebida",
+      "difficulty": "medio",
+      "shots": 2,
+      "text_pt": "Beba de copo estranho (luva, sapato, etc)",
+      "text_en": "Drink from a strange container (glove, shoe, etc)"
+    },
+    {
+      "id": "45",
+      "category": "grupo",
+      "difficulty": "dificil",
+      "shots": 3,
+      "text_pt": "Todos que ja dormiram aqui bebem",
+      "text_en": "Everyone who has slept here drinks"
+    },
+    {
+      "id": "46",
+      "category": "verdade",
+      "difficulty": "medio",
+      "shots": 2,
+      "text_pt": "Qual e a coisa mais infantil que ainda faz?",
+      "text_en": "What's the most childish thing you still do?"
+    },
+    {
+      "id": "47",
+      "category": "coragem",
+      "difficulty": "extremo",
+      "shots": 4,
+      "text_pt": "Poste algo vergonhoso no Instagram por 5 minutos",
+      "text_en": "Post something embarrassing on Instagram for 5 minutes"
+    },
+    {
+      "id": "48",
+      "category": "bebida",
+      "difficulty": "facil",
+      "shots": 1,
+      "text_pt": "Faca um brinde usando uma lingua estrangeira",
+      "text_en": "Make a toast in a foreign language"
+    },
+    {
+      "id": "49",
+      "category": "grupo",
+      "difficulty": "dificil",
+      "shots": 3,
+      "text_pt": "Todos que ja viajaram com desconhecidos bebem",
+      "text_en": "Everyone who has traveled with strangers drinks"
+    },
+    {
+      "id": "50",
+      "category": "coragem",
+      "difficulty": "medio",
+      "shots": 2,
+      "text_pt": "Faca uma danca viral e todo mundo filmar",
+      "text_en": "Do a viral dance and everyone films"
+    },
+    {
+      "id": "51",
+      "category": "verdade",
+      "difficulty": "dificil",
+      "shots": 3,
+      "text_pt": "Qual e a maior mentira que ja contou para se safar?",
+      "text_en": "What's the biggest lie you've told to get out of trouble?"
+    },
+    {
+      "id": "52",
+      "category": "bebida",
+      "difficulty": "dificil",
+      "shots": 3,
+      "text_pt": "Beba o que o grupo misturar",
+      "text_en": "Drink whatever the group mixes"
+    },
+    {
+      "id": "53",
+      "category": "grupo",
+      "difficulty": "extremo",
+      "shots": 4,
+      "text_pt": "Todos que ja fizeram algo ilegal bebem",
+      "text_en": "Everyone who has done something illegal drinks"
+    },
+    {
+      "id": "54",
+      "category": "coragem",
+      "difficulty": "dificil",
+      "shots": 3,
+      "text_pt": "Faca uma serenata para o jogador da sua esquerda",
+      "text_en": "Serenade the player to your left"
+    },
+    {
+      "id": "55",
+      "category": "verdade",
+      "difficulty": "medio",
+      "shots": 2,
+      "text_pt": "Qual e a coisa mais boba que ja chorou?",
+      "text_en": "What's the silliest thing you've cried about?"
+    },
+    {
+      "id": "56",
+      "category": "bebida",
+      "difficulty": "facil",
+      "shots": 1,
+      "text_pt": "Troque de bebida com alguem por 5 minutos",
+      "text_en": "Swap drinks with someone for 5 minutes"
+    },
+    {
+      "id": "57",
+      "category": "grupo",
+      "difficulty": "dificil",
+      "shots": 3,
+      "text_pt": "Todos que ja beijaram mais de 3 pessoas aqui bebem",
+      "text_en": "Everyone who has kissed more than 3 people here drinks"
+    },
+    {
+      "id": "58",
+      "category": "coragem",
+      "difficulty": "medio",
+      "shots": 2,
+      "text_pt": "Faca uma propaganda de algo ridiculo por 30 segundos",
+      "text_en": "Do a 30-second commercial for something ridiculous"
+    },
+    {
+      "id": "59",
+      "category": "verdade",
+      "difficulty": "extremo",
+      "shots": 4,
+      "text_pt": "Conte o segredo mais perturbador que sabe",
+      "text_en": "Share the most disturbing secret you know"
+    },
+    {
+      "id": "60",
+      "category": "bebida",
+      "difficulty": "dificil",
+      "shots": 3,
+      "text_pt": "Beba de olhos fechados e adivinhe o que e",
+      "text_en": "Drink with your eyes closed and guess what it is"
+    },
+    {
+      "id": "61",
+      "category": "grupo",
+      "difficulty": "dificil",
+      "shots": 3,
+      "text_pt": "Todos que ja tiveram um sonho estranho bebem",
+      "text_en": "Everyone who has had a weird dream drinks"
+    },
+    {
+      "id": "62",
+      "category": "coragem",
+      "difficulty": "extremo",
+      "shots": 4,
+      "text_pt": "Faca uma confession publica sobre algo inutil",
+      "text_en": "Make a public confession about something trivial"
+    },
+    {
+      "id": "63",
+      "category": "verdade",
+      "difficulty": "medio",
+      "shots": 2,
+      "text_pt": "Qual e a musica mais brega que gosta?",
+      "text_en": "What's the cheesiest song you like?"
+    },
+    {
+      "id": "64",
+      "category": "bebida",
+      "difficulty": "medio",
+      "shots": 2,
+      "text_pt": "Beba emposite e todos bebem junto",
+      "text_en": "Drink upside down and everyone drinks with you"
+    },
+    {
+      "id": "65",
+      "category": "grupo",
+      "difficulty": "extremo",
+      "shots": 5,
+      "text_pt": "Rodada de shots para todos! Sem excecao!",
+      "text_en": "Shot round for everyone! No exceptions!"
+    },
+    {
+      "id": "66",
+      "category": "coragem",
+      "difficulty": "medio",
+      "shots": 2,
+      "text_pt": "Faca uma entrevista imaginaria com um famoso",
+      "text_en": "Do an imaginary interview with a celebrity"
+    },
+    {
+      "id": "67",
+      "category": "verdade",
+      "difficulty": "dificil",
+      "shots": 3,
+      "text_pt": "Qual e a coisa mais covarde que ja fez?",
+      "text_en": "What's the most cowardly thing you've done?"
+    },
+    {
+      "id": "68",
+      "category": "bebida",
+      "difficulty": "facil",
+      "shots": 1,
+      "text_pt": "Aponte para alguem e ambos bebam",
+      "text_en": "Point at someone and both drink"
+    },
+    {
+      "id": "69",
+      "category": "grupo",
+      "difficulty": "dificil",
+      "shots": 3,
+      "text_pt": "Todos que ja brigaram com amigo bebem",
+      "text_en": "Everyone who has fought with a friend drinks"
+    },
+    {
+      "id": "70",
+      "category": "coragem",
+      "difficulty": "dificil",
+      "shots": 3,
+      "text_pt": "Faca sua melhor impression de um personagem de filme",
+      "text_en": "Do your best movie character impression"
+    },
+    {
+      "id": "71",
+      "category": "verdade",
+      "difficulty": "medio",
+      "shots": 2,
+      "text_pt": "Qual e a maior inveja que ja teve?",
+      "text_en": "What's the biggest jealousy you've ever had?"
+    },
+    {
+      "id": "72",
+      "category": "bebida",
+      "difficulty": "extremo",
+      "shots": 4,
+      "text_pt": "Beba o conteudo inteiro do seu copo",
+      "text_en": "Drink the entire contents of your cup"
+    },
+    {
+      "id": "73",
+      "category": "grupo",
+      "difficulty": "dificil",
+      "shots": 3,
+      "text_pt": "Todos que ja usaram roupas do contrario bebem",
+      "text_en": "Everyone who has worn the opposite gender's clothes drinks"
+    },
+    {
+      "id": "74",
+      "category": "coragem",
+      "difficulty": "medio",
+      "shots": 2,
+      "text_pt": "Faca um rap sobre sua vida em 30 segundos",
+      "text_en": "Rap about your life for 30 seconds"
+    },
+    {
+      "id": "75",
+      "category": "verdade",
+      "difficulty": "dificil",
+      "shots": 3,
+      "text_pt": "Qual e a coisa mais egoista que ja fez?",
+      "text_en": "What's the most selfish thing you've done?"
+    },
+    {
+      "id": "76",
+      "category": "bebida",
+      "difficulty": "medio",
+      "shots": 2,
+      "text_pt": "Beba de joelhos e faca uma oracao",
+      "text_en": "Kneel down and say a prayer before drinking"
+    },
+    {
+      "id": "77",
+      "category": "grupo",
+      "difficulty": "extremo",
+      "shots": 4,
+      "text_pt": "Todos que ja tiveram um crush em alguem do grupo bebem",
+      "text_en": "Everyone who has had a crush on someone in the group drinks"
+    },
+    {
+      "id": "78",
+      "category": "coragem",
+      "difficulty": "extremo",
+      "shots": 4,
+      "text_pt": "Mande uma mensagem para seu chefe/professor elogiando",
+      "text_en": "Send a compliment message to your boss/teacher"
+    },
+    {
+      "id": "79",
+      "category": "verdade",
+      "difficulty": "medio",
+      "shots": 2,
+      "text_pt": "Qual e a coisa mais nerd que faz no seu tempo livre?",
+      "text_en": "What's the nerdiest thing you do in your free time?"
+    },
+    {
+      "id": "80",
+      "category": "bebida",
+      "difficulty": "dificil",
+      "shots": 3,
+      "text_pt": "Beba usando apenas os cotovelos",
+      "text_en": "Drink using only your elbows"
+    },
+    {
+      "id": "81",
+      "category": "grupo",
+      "difficulty": "dificil",
+      "shots": 3,
+      "text_pt": "Todos que ja fizeram algo impulsivo bebem",
+      "text_en": "Everyone who has done something impulsive drinks"
+    },
+    {
+      "id": "82",
+      "category": "coragem",
+      "difficulty": "medio",
+      "shots": 2,
+      "text_pt": "Faca uma danca coreografada com o jogador da direita",
+      "text_en": "Do a choreographed dance with the player to your right"
+    },
+    {
+      "id": "83",
+      "category": "verdade",
+      "difficulty": "extremo",
+      "shots": 4,
+      "text_pt": "Revele o conteudo mais constrangedor do seu historico de busca",
+      "text_en": "Reveal the most embarrassing search history content"
+    },
+    {
+      "id": "84",
+      "category": "bebida",
+      "difficulty": "facil",
+      "shots": 1,
+      "text_pt": "Toque em alguem e ambos bebam",
+      "text_en": "Touch someone and both drink"
+    },
+    {
+      "id": "85",
+      "category": "grupo",
+      "difficulty": "dificil",
+      "shots": 3,
+      "text_pt": "Todos que ja mentiram para se safar bebem",
+      "text_en": "Everyone who has lied to get out of trouble drinks"
+    },
+    {
+      "id": "86",
+      "category": "coragem",
+      "difficulty": "dificil",
+      "shots": 3,
+      "text_pt": "Faca uma ode poetica para o jogador mais velho",
+      "text_en": "Recite a poetic ode to the oldest player"
+    },
+    {
+      "id": "87",
+      "category": "verdade",
+      "difficulty": "medio",
+      "shots": 2,
+      "text_pt": "Qual e a maior desculpa esfarrapada que ja deu?",
+      "text_en": "What's the lamest excuse you've ever given?"
+    },
+    {
+      "id": "88",
+      "category": "bebida",
+      "difficulty": "medio",
+      "shots": 2,
+      "text_pt": "Beba de costas para o grupo e acerte o copo",
+      "text_en": "Drink facing away from the group and hit the cup"
+    },
+    {
+      "id": "89",
+      "category": "grupo",
+      "difficulty": "extremo",
+      "shots": 5,
+      "text_pt": "Desafio final: todos bebem e comecam de novo!",
+      "text_en": "Final challenge: everyone drinks and starts over!"
+    },
+    {
+      "id": "90",
+      "category": "coragem",
+      "difficulty": "medio",
+      "shots": 2,
+      "text_pt": "Faca uma careta e deixe o grupo tirar foto",
+      "text_en": "Make a funny face and let the group take a photo"
     }
   ]
 }
