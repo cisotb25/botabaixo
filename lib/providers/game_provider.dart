@@ -117,22 +117,19 @@ class GameProvider extends ChangeNotifier {
   }
 
   void _pairVirusCards(List<RoundChallenge> challenges, List<Player> players) {
-    // Find virus_start cards and their next virus_end card
+    // Track unpaired virus_start indices
+    final unpairedStarts = <int>[];
+
     for (int i = 0; i < challenges.length; i++) {
       if (challenges[i].challenge.isVirusStart) {
-        // Find next virus_end
-        for (int j = i + 1; j < challenges.length; j++) {
-          if (challenges[j].challenge.isVirusEnd) {
-            // Assign the end card to the same player as the start
-            challenges[j] = RoundChallenge(
-              challenge: challenges[j].challenge,
-              assignedPlayer: challenges[i].assignedPlayer,
-            );
-            break;
-          }
-          // If we hit another virus_start, stop looking
-          if (challenges[j].challenge.isVirusStart) break;
-        }
+        unpairedStarts.add(i);
+      } else if (challenges[i].challenge.isVirusEnd && unpairedStarts.isNotEmpty) {
+        // Pair this end with the most recent unpaired start
+        final startIdx = unpairedStarts.removeLast();
+        challenges[i] = RoundChallenge(
+          challenge: challenges[i].challenge,
+          assignedPlayer: challenges[startIdx].assignedPlayer,
+        );
       }
     }
   }
@@ -168,9 +165,14 @@ class GameProvider extends ChangeNotifier {
             assignedPlayer: currentChallenge.assignedPlayer,
           ));
         } else if (currentChallenge.challenge.isVirusEnd) {
-          // Remove virus for this specific player
+          // Remove the most recent virus for this specific player
           final playerId = currentChallenge.assignedPlayer.id;
-          _activeViruses.removeWhere((v) => v.assignedPlayer.id == playerId);
+          for (int i = _activeViruses.length - 1; i >= 0; i--) {
+            if (_activeViruses[i].assignedPlayer.id == playerId) {
+              _activeViruses.removeAt(i);
+              break;
+            }
+          }
         }
 
         _currentChallengeIndex++;
