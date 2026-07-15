@@ -110,9 +110,9 @@ class ChallengeService {
       Challenge(id: '1', type: 'normal', textPT: 'Se você já mentiu, beba 2 goles', textEN: "If you've lied, take 2 sips", sips: 2),
       Challenge(id: '2', type: 'normal', textPT: 'Se você já chegou atrasado, beba 3 goles', textEN: "If you've been late, take 3 sips", sips: 3),
       Challenge(id: '3', type: 'game', textPT: 'Vai passando e listando frutas. Quem errar bebe 2 goles!', textEN: "Pass around naming fruits. Wrong answer drinks 2 sips!", sips: 2),
-      Challenge(id: '4', type: 'virus_start', textPT: 'Agora só pode falar baixo!', textEN: "You can only speak softly now!"},
-      Challenge(id: '5', type: 'virus_end', textPT: 'O vírus acabou!', textEN: "The virus is over!"},
-      Challenge(id: '6', type: 'bottoms_up', textPT: 'Bebe tudo!', textEN: "Drink it all!"},
+      Challenge(id: '4', type: 'virus_start', textPT: 'Agora só pode falar baixo!', textEN: "You can only speak softly now!"),
+      Challenge(id: '5', type: 'virus_end', textPT: 'O vírus acabou!', textEN: "The virus is over!"),
+      Challenge(id: '6', type: 'bottoms_up', textPT: 'Bebe tudo!', textEN: "Drink it all!"),
     ];
   }
 }
