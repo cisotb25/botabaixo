@@ -139,7 +139,7 @@ class _GameScreenState extends State<GameScreen> {
                     child: Container(
                       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                       decoration: BoxDecoration(
-                        color: const Color(0xFF9C27B0).withValues(alpha: 0.3),
+                        color: const Color(0xFFFFEB3B).withValues(alpha: 0.3),
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Row(
@@ -150,7 +150,7 @@ class _GameScreenState extends State<GameScreen> {
                           Text(
                             'Virus (${gameProvider.activeViruses.length})',
                             style: const TextStyle(
-                              color: Color(0xFF9C27B0),
+                              color: Color(0xFFFFEB3B),
                               fontWeight: FontWeight.bold,
                               fontSize: 12,
                             ),
@@ -251,7 +251,7 @@ class _GameScreenState extends State<GameScreen> {
                             ),
                             const SizedBox(width: 8),
                             Text(
-                              'De ${challenge.giveSipsAmount} gole(s) para alguem',
+                              'De ${challenge.giveSipsAmount} gole(s) para alguém',
                               style: const TextStyle(
                                 color: Color(0xFF00BFA5),
                                 fontWeight: FontWeight.bold,
@@ -267,13 +267,15 @@ class _GameScreenState extends State<GameScreen> {
                           margin: const EdgeInsets.only(top: 16),
                           padding: const EdgeInsets.all(12),
                           decoration: BoxDecoration(
-                            color: const Color(0xFF9C27B0).withValues(alpha: 0.2),
+                            color: const Color(0xFFFFEB3B).withValues(alpha: 0.2),
                             borderRadius: BorderRadius.circular(12),
                           ),
-                          child: const Text(
-                            'Este efeito continua ate ser cancelado!',
-                            style: TextStyle(
-                              color: Color(0xFF9C27B0),
+                          child: Text(
+                            challenge.isVirusStart
+                                ? 'Este efeito continua ate ser cancelado!'
+                                : 'Virus encerrado!',
+                            style: const TextStyle(
+                              color: Color(0xFFFFEB3B),
                               fontStyle: FontStyle.italic,
                               fontSize: 13,
                             ),
@@ -331,7 +333,7 @@ class _GameScreenState extends State<GameScreen> {
             const SizedBox(width: 8),
             Text(
               'Virus Ativo${gameProvider.activeViruses.length > 1 ? 's' : ''}',
-              style: const TextStyle(color: Color(0xFF9C27B0)),
+              style: const TextStyle(color: Color(0xFFFFEB3B)),
             ),
           ],
         ),
@@ -343,7 +345,7 @@ class _GameScreenState extends State<GameScreen> {
               width: double.infinity,
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: const Color(0xFF9C27B0).withValues(alpha: 0.15),
+                color: const Color(0xFFFFEB3B).withValues(alpha: 0.15),
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Column(
@@ -352,7 +354,7 @@ class _GameScreenState extends State<GameScreen> {
                   Text(
                     virus.assignedPlayer.name,
                     style: const TextStyle(
-                      color: Color(0xFF9C27B0),
+                      color: Color(0xFFFFEB3B),
                       fontWeight: FontWeight.bold,
                       fontSize: 12,
                     ),

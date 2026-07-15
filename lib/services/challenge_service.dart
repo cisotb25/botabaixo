@@ -74,23 +74,15 @@ class ChallengeService {
       deck.add(_getChallengeByType('game'));
     }
 
-    // Add virus challenges (start cards first, end cards later)
+    // Add virus challenges - always pair start then end
     final virusStarts = _challenges.where((c) => c.type == 'virus_start').toList();
     final virusEnds = _challenges.where((c) => c.type == 'virus_end').toList();
 
-    if (virusCount > 0 && virusStarts.isNotEmpty) {
-      // Add start cards in first half of virus section
-      final halfVirus = (virusCount / 2).ceil();
-      for (int i = 0; i < halfVirus && i < virusStarts.length; i++) {
+    if (virusCount >= 2 && virusStarts.isNotEmpty && virusEnds.isNotEmpty) {
+      final pairs = virusCount ~/ 2;
+      for (int i = 0; i < pairs; i++) {
         deck.add(virusStarts[_random.nextInt(virusStarts.length)]);
-      }
-
-      // Add end cards in second half (ensures start comes before end)
-      final remainingVirus = virusCount - halfVirus;
-      if (virusEnds.isNotEmpty) {
-        for (int i = 0; i < remainingVirus; i++) {
-          deck.add(virusEnds[_random.nextInt(virusEnds.length)]);
-        }
+        deck.add(virusEnds[_random.nextInt(virusEnds.length)]);
       }
     }
 

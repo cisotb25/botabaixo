@@ -16,6 +16,12 @@ class GameProvider extends ChangeNotifier {
   GameMode _currentGameMode = GameMode.normal;
   List<ActiveVirus> _activeViruses = [];
 
+  static final Player everyonePlayer = Player(
+    id: 'everyone',
+    name: 'Todos',
+    pronoun: 'they',
+  );
+
   GameRound? get currentRound => _currentRound;
   List<GameRound> get gameHistory => _gameHistory;
   bool get isLoading => _isLoading;
@@ -74,12 +80,24 @@ class GameProvider extends ChangeNotifier {
       // Assign challenges to players
       final roundChallenges = <RoundChallenge>[];
       for (int i = 0; i < deck.length; i++) {
-        final player = shuffledPlayers[i % shuffledPlayers.length];
+        final challenge = deck[i];
+        Player player;
+
+        // Assign group challenges to Everyone player
+        if (challenge.isGroupChallenge) {
+          player = everyonePlayer;
+        } else {
+          player = shuffledPlayers[i % shuffledPlayers.length];
+        }
+
         roundChallenges.add(RoundChallenge(
-          challenge: deck[i],
+          challenge: challenge,
           assignedPlayer: player,
         ));
       }
+
+      // Post-process: pair virus_start and virus_end to same player
+      _pairVirusCards(roundChallenges, shuffledPlayers);
 
       _currentRound = GameRound(
         id: const Uuid().v4(),
@@ -95,6 +113,27 @@ class GameProvider extends ChangeNotifier {
       _error = 'Erro ao iniciar rodada: $e';
       _isLoading = false;
       notifyListeners();
+    }
+  }
+
+  void _pairVirusCards(List<RoundChallenge> challenges, List<Player> players) {
+    // Find virus_start cards and their next virus_end card
+    for (int i = 0; i < challenges.length; i++) {
+      if (challenges[i].challenge.isVirusStart) {
+        // Find next virus_end
+        for (int j = i + 1; j < challenges.length; j++) {
+          if (challenges[j].challenge.isVirusEnd) {
+            // Assign the end card to the same player as the start
+            challenges[j] = RoundChallenge(
+              challenge: challenges[j].challenge,
+              assignedPlayer: challenges[i].assignedPlayer,
+            );
+            break;
+          }
+          // If we hit another virus_start, stop looking
+          if (challenges[j].challenge.isVirusStart) break;
+        }
+      }
     }
   }
 
@@ -120,18 +159,18 @@ class GameProvider extends ChangeNotifier {
 
         // Handle virus cards
         if (currentChallenge.challenge.isVirusStart) {
-          // Add new virus
+          // Add new virus for this player
           final text = currentChallenge.challenge.textPT;
+          final playerName = currentChallenge.assignedPlayer.name;
           _activeViruses.add(ActiveVirus(
             id: const Uuid().v4(),
-            text: text.replaceAll('{player}', currentChallenge.assignedPlayer.name),
+            text: text.replaceAll('{player}', playerName),
             assignedPlayer: currentChallenge.assignedPlayer,
           ));
         } else if (currentChallenge.challenge.isVirusEnd) {
-          // Remove the most recent virus
-          if (_activeViruses.isNotEmpty) {
-            _activeViruses.removeLast();
-          }
+          // Remove virus for this specific player
+          final playerId = currentChallenge.assignedPlayer.id;
+          _activeViruses.removeWhere((v) => v.assignedPlayer.id == playerId);
         }
 
         _currentChallengeIndex++;

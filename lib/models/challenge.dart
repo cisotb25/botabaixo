@@ -40,6 +40,15 @@ class Challenge extends HiveObject {
   bool get isGame => type == 'game';
   bool get isNormal => type == 'normal';
 
+  bool get isGroupChallenge {
+    final lower = textPT.toLowerCase();
+    return lower.contains('todos') ||
+        lower.contains('everyone') ||
+        lower.contains('all ') ||
+        lower.contains('grupo') ||
+        lower.contains('todes');
+  }
+
   String get icon {
     switch (type) {
       case 'normal':
@@ -104,7 +113,11 @@ class Challenge extends HiveObject {
       case 'game':
         return 0xFF2196F3; // Blue
       case 'virus':
-        return 0xFF9C27B0; // Purple
+        return 0xFFFFEB3B; // Yellow
+      case 'virus_start':
+        return 0xFFFFEB3B; // Yellow
+      case 'virus_end':
+        return 0xFFFFEB3B; // Yellow
       case 'bottoms_up':
         return 0xFFF44336; // Red
       default:
