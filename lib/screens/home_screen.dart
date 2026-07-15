@@ -408,7 +408,7 @@ class _GameSetupSheetState extends State<_GameSetupSheet> {
 
             // Start button
             Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: EdgeInsets.fromLTRB(16, 0, 16, MediaQuery.of(context).padding.bottom + 16),
               child: ElevatedButton(
                 onPressed: _selectedPlayerIds.isNotEmpty
                     ? () {

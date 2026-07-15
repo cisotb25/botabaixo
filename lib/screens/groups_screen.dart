@@ -419,7 +419,7 @@ class _ManagePlayersSheetState extends State<_ManagePlayersSheet> {
 
             // Save button
             Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: EdgeInsets.fromLTRB(16, 0, 16, MediaQuery.of(context).padding.bottom + 16),
               child: ElevatedButton(
                 onPressed: () {
                   final groupProvider = context.read<GroupProvider>();
