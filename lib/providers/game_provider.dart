@@ -117,19 +117,22 @@ class GameProvider extends ChangeNotifier {
   }
 
   void _pairVirusCards(List<RoundChallenge> challenges, List<Player> players) {
-    // Track unpaired virus_start indices
-    final unpairedStarts = <int>[];
-
+    // Virus pairs are already adjacent in the deck (guaranteed by generateDeck).
+    // Just ensure each virus_end gets the same player as its preceding virus_start.
     for (int i = 0; i < challenges.length; i++) {
-      if (challenges[i].challenge.isVirusStart) {
-        unpairedStarts.add(i);
-      } else if (challenges[i].challenge.isVirusEnd && unpairedStarts.isNotEmpty) {
-        // Pair this end with the most recent unpaired start
-        final startIdx = unpairedStarts.removeLast();
-        challenges[i] = RoundChallenge(
-          challenge: challenges[i].challenge,
-          assignedPlayer: challenges[startIdx].assignedPlayer,
-        );
+      if (challenges[i].challenge.isVirusEnd) {
+        // Look backwards for the most recent virus_start
+        for (int j = i - 1; j >= 0; j--) {
+          if (challenges[j].challenge.isVirusStart) {
+            challenges[i] = RoundChallenge(
+              challenge: challenges[i].challenge,
+              assignedPlayer: challenges[j].assignedPlayer,
+            );
+            break;
+          }
+          // Stop if we hit another virus_end (shouldn't happen with paired deck)
+          if (challenges[j].challenge.isVirusEnd) break;
+        }
       }
     }
   }
@@ -165,14 +168,18 @@ class GameProvider extends ChangeNotifier {
             assignedPlayer: currentChallenge.assignedPlayer,
           ));
         } else if (currentChallenge.challenge.isVirusEnd) {
-          // Remove the most recent virus for this specific player
+          // Only remove if there's an active virus for this player
           final playerId = currentChallenge.assignedPlayer.id;
-          for (int i = _activeViruses.length - 1; i >= 0; i--) {
-            if (_activeViruses[i].assignedPlayer.id == playerId) {
-              _activeViruses.removeAt(i);
-              break;
+          final hasVirus = _activeViruses.any((v) => v.assignedPlayer.id == playerId);
+          if (hasVirus) {
+            for (int i = _activeViruses.length - 1; i >= 0; i--) {
+              if (_activeViruses[i].assignedPlayer.id == playerId) {
+                _activeViruses.removeAt(i);
+                break;
+              }
             }
           }
+          // If no active virus for this player, the end card is silently skipped
         }
 
         _currentChallengeIndex++;

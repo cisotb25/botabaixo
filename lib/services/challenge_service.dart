@@ -56,43 +56,49 @@ class ChallengeService {
   }
 
   static List<Challenge> generateDeck(int totalCards) {
-    final List<Challenge> deck = [];
-
     // Distribution: 40% normal, 30% game, 20% virus, 10% bottoms_up
     final normalCount = (totalCards * 0.40).round();
     final gameCount = (totalCards * 0.30).round();
     final virusCount = (totalCards * 0.20).round();
     final bottomsUpCount = totalCards - normalCount - gameCount - virusCount;
 
-    // Add normal challenges
+    // Phase 1: Build non-virus cards (shuffled)
+    final nonVirusDeck = <Challenge>[];
     for (int i = 0; i < normalCount; i++) {
-      deck.add(_getChallengeByType('normal'));
+      nonVirusDeck.add(_getChallengeByType('normal'));
     }
-
-    // Add game challenges
     for (int i = 0; i < gameCount; i++) {
-      deck.add(_getChallengeByType('game'));
+      nonVirusDeck.add(_getChallengeByType('game'));
     }
+    for (int i = 0; i < bottomsUpCount; i++) {
+      nonVirusDeck.add(_getChallengeByType('bottoms_up'));
+    }
+    nonVirusDeck.shuffle(_random);
 
-    // Add virus challenges - always pair start then end
+    // Phase 2: Build virus pairs (start + end together, never shuffled apart)
     final virusStarts = _challenges.where((c) => c.type == 'virus_start').toList();
     final virusEnds = _challenges.where((c) => c.type == 'virus_end').toList();
 
+    final virusPairs = <List<Challenge>>[];
     if (virusCount >= 2 && virusStarts.isNotEmpty && virusEnds.isNotEmpty) {
       final pairs = virusCount ~/ 2;
       for (int i = 0; i < pairs; i++) {
-        deck.add(virusStarts[_random.nextInt(virusStarts.length)]);
-        deck.add(virusEnds[_random.nextInt(virusEnds.length)]);
+        final start = virusStarts[_random.nextInt(virusStarts.length)];
+        final end = virusEnds[_random.nextInt(virusEnds.length)];
+        virusPairs.add([start, end]);
       }
     }
+    virusPairs.shuffle(_random);
 
-    // Add bottoms up
-    for (int i = 0; i < bottomsUpCount; i++) {
-      deck.add(_getChallengeByType('bottoms_up'));
+    // Phase 3: Insert virus pairs into non-virus deck at random positions
+    // Each pair is inserted as a unit: [start, end] stays together
+    final deck = List<Challenge>.from(nonVirusDeck);
+    for (final pair in virusPairs) {
+      // Pick a random insertion point (must leave room for both cards)
+      final maxIndex = deck.length;
+      final insertIndex = _random.nextInt(maxIndex + 1);
+      deck.insertAll(insertIndex, pair);
     }
-
-    // Shuffle the deck
-    deck.shuffle(_random);
 
     return deck;
   }
