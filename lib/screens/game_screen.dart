@@ -9,11 +9,13 @@ import '../models/game_mode.dart';
 class GameScreen extends StatefulWidget {
   final List<Player> players;
   final GameMode gameMode;
+  final int customTurns;
 
   const GameScreen({
     super.key,
     required this.players,
     this.gameMode = GameMode.normal,
+    this.customTurns = 4,
   });
 
   @override
@@ -27,7 +29,7 @@ class _GameScreenState extends State<GameScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context
           .read<GameProvider>()
-          .startNewRound(widget.players, mode: widget.gameMode);
+          .startNewRound(widget.players, mode: widget.gameMode, customTurns: widget.customTurns);
     });
   }
 
@@ -197,13 +199,14 @@ class _GameScreenState extends State<GameScreen> {
                         padding: const EdgeInsets.symmetric(
                             horizontal: 16, vertical: 8),
                         decoration: BoxDecoration(
-                          color: Colors.grey[800],
+                          color: Color(currentChallenge.challenge.getCategoryColorValue()).withValues(alpha: 0.2),
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: Text(
                           currentChallenge.challenge.getCategoryNamePT(),
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontWeight: FontWeight.bold,
+                            color: Color(currentChallenge.challenge.getCategoryColorValue()),
                           ),
                         ),
                       ),

@@ -153,7 +153,7 @@ class HomeScreen extends StatelessWidget {
       ),
       builder: (context) => _GameSetupSheet(
         players: playerProvider.players,
-        onGameStarted: (selectedPlayers, gameMode) {
+        onGameStarted: (selectedPlayers, gameMode, customTurns) {
           Navigator.pop(context);
           Navigator.push(
             context,
@@ -161,6 +161,7 @@ class HomeScreen extends StatelessWidget {
               builder: (context) => GameScreen(
                 players: selectedPlayers,
                 gameMode: gameMode,
+                customTurns: customTurns,
               ),
             ),
           );
@@ -198,7 +199,7 @@ class HomeScreen extends StatelessWidget {
 
 class _GameSetupSheet extends StatefulWidget {
   final List<Player> players;
-  final Function(List<Player>, GameMode) onGameStarted;
+  final Function(List<Player>, GameMode, int) onGameStarted;
 
   const _GameSetupSheet({
     required this.players,
@@ -212,6 +213,7 @@ class _GameSetupSheet extends StatefulWidget {
 class _GameSetupSheetState extends State<_GameSetupSheet> {
   final Set<String> _selectedPlayerIds = {};
   GameMode _selectedMode = GameMode.normal;
+  int _customTurns = 4;
 
   @override
   Widget build(BuildContext context) {
@@ -311,10 +313,41 @@ class _GameSetupSheetState extends State<_GameSetupSheet> {
                     }).toList(),
                   ),
                   const SizedBox(height: 8),
-                  Text(
-                    GameModeConfig.getConfig(_selectedMode).description,
-                    style: TextStyle(color: Colors.grey[500]),
+
+                  // Custom turns slider
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          _selectedMode == GameMode.custom
+                              ? 'Customizado: $_customTurns desafios por jogador'
+                              : GameModeConfig.getConfig(_selectedMode).description,
+                          style: TextStyle(color: Colors.grey[500]),
+                        ),
+                      ),
+                      if (_selectedMode == GameMode.custom)
+                        Text(
+                          '$_customTurns',
+                          style: const TextStyle(
+                            color: Color(0xFF6A1B9A),
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                    ],
                   ),
+                  if (_selectedMode == GameMode.custom)
+                    Slider(
+                      value: _customTurns.toDouble(),
+                      min: 1,
+                      max: 10,
+                      divisions: 9,
+                      activeColor: const Color(0xFF6A1B9A),
+                      onChanged: (value) {
+                        setState(() {
+                          _customTurns = value.round();
+                        });
+                      },
+                    ),
                 ],
               ),
             ),
@@ -369,6 +402,38 @@ class _GameSetupSheetState extends State<_GameSetupSheet> {
             ),
             const SizedBox(height: 8),
 
+            // Select All button
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: OutlinedButton.icon(
+                onPressed: () {
+                  setState(() {
+                    if (_selectedPlayerIds.length == widget.players.length) {
+                      _selectedPlayerIds.clear();
+                    } else {
+                      _selectedPlayerIds.addAll(widget.players.map((p) => p.id));
+                    }
+                  });
+                },
+                icon: Icon(
+                  _selectedPlayerIds.length == widget.players.length
+                      ? Icons.deselect
+                      : Icons.select_all,
+                  size: 20,
+                ),
+                label: Text(
+                  _selectedPlayerIds.length == widget.players.length
+                      ? 'Desmarcar Todos'
+                      : 'Selecionar Todos',
+                ),
+                style: OutlinedButton.styleFrom(
+                  foregroundColor: const Color(0xFFFF6D00),
+                  side: const BorderSide(color: Color(0xFFFF6D00)),
+                ),
+              ),
+            ),
+            const SizedBox(height: 8),
+
             // Player list
             Expanded(
               child: ListView.builder(
@@ -416,7 +481,7 @@ class _GameSetupSheetState extends State<_GameSetupSheet> {
                             .where(
                                 (p) => _selectedPlayerIds.contains(p.id))
                             .toList();
-                        widget.onGameStarted(selectedPlayers, _selectedMode);
+                        widget.onGameStarted(selectedPlayers, _selectedMode, _customTurns);
                       }
                     : null,
                 style: ElevatedButton.styleFrom(

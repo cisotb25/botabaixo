@@ -48,4 +48,13 @@ class GameModeConfig {
   }
 
   static List<GameModeConfig> get allModes => configs.values.toList();
+
+  static GameModeConfig getCustomConfig(int turnsPerPlayer) {
+    return GameModeConfig(
+      mode: GameMode.custom,
+      name: 'Customizado',
+      description: '$turnsPerPlayer desafios por jogador',
+      turnsPerPlayer: turnsPerPlayer,
+    );
+  }
 }

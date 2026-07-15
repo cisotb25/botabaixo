@@ -58,7 +58,7 @@
     },
     {
       "id": "8",
-      "category": "coragem",
+      "category": "desafio",
       "difficulty": "dificil",
       "shots": 3,
       "text_pt": "Imite um animal por 30 segundos",
@@ -66,7 +66,7 @@
     },
     {
       "id": "9",
-      "category": "coragem",
+      "category": "desafio",
       "difficulty": "dificil",
       "shots": 3,
       "text_pt": "Cante uma musica popular",
@@ -74,7 +74,7 @@
     },
     {
       "id": "10",
-      "category": "coragem",
+      "category": "desafio",
       "difficulty": "dificil",
       "shots": 3,
       "text_pt": "Faca uma danca ridicula",
@@ -130,7 +130,7 @@
     },
     {
       "id": "17",
-      "category": "coragem",
+      "category": "desafio",
       "difficulty": "dificil",
       "shots": 3,
       "text_pt": "Ligue para alguem e diga 'eu te amo'",
@@ -138,7 +138,7 @@
     },
     {
       "id": "18",
-      "category": "coragem",
+      "category": "desafio",
       "difficulty": "facil",
       "shots": 1,
       "text_pt": "Poste algo engraçado nas redes sociais",
@@ -170,7 +170,7 @@
     },
     {
       "id": "22",
-      "category": "coragem",
+      "category": "desafio",
       "difficulty": "dificil",
       "shots": 3,
       "text_pt": "Faca uma imitacao de alguem do grupo",
@@ -202,7 +202,7 @@
     },
     {
       "id": "26",
-      "category": "coragem",
+      "category": "desafio",
       "difficulty": "dificil",
       "shots": 3,
       "text_pt": "Faca uma pose por 30 segundos e todo mundo tira foto",
@@ -226,7 +226,7 @@
     },
     {
       "id": "29",
-      "category": "coragem",
+      "category": "desafio",
       "difficulty": "medio",
       "shots": 2,
       "text_pt": "Conte uma historia em 30 segundos",
@@ -250,7 +250,7 @@
     },
     {
       "id": "32",
-      "category": "coragem",
+      "category": "desafio",
       "difficulty": "dificil",
       "shots": 3,
       "text_pt": "Faca sua melhor impression de um professor",
@@ -282,39 +282,39 @@
     },
     {
       "id": "36",
-      "category": "coragem",
+      "category": "penalidade_max",
       "difficulty": "extremo",
-      "shots": 4,
-      "text_pt": "Ligue para seu ex e diga que sente falta",
-      "text_en": "Call your ex and say you miss them"
+      "shots": 5,
+      "text_pt": "Beba o conteudo inteiro do seu copo!",
+      "text_en": "Drink the entire contents of your cup!"
     },
     {
       "id": "37",
-      "category": "grupo",
-      "difficulty": "dificil",
-      "shots": 3,
-      "text_pt": "O grupo escolhe a musica mais feia e todos cantam",
-      "text_en": "Group picks the ugliest song and everyone sings"
+      "category": "seria_ou_beberia",
+      "difficulty": "medio",
+      "shots": 2,
+      "text_pt": "Voce preferiria nunca mais usar redes sociais ou nunca mais ouvir musica?",
+      "text_en": "Would you rather never use social media again or never listen to music again?"
     },
     {
       "id": "38",
-      "category": "verdade",
-      "difficulty": "medio",
-      "shots": 2,
-      "text_pt": "Qual e a coisa mais estranha que ja comeu?",
-      "text_en": "What's the weirdest thing you've ever eaten?"
+      "category": "regra",
+      "difficulty": "facil",
+      "shots": 1,
+      "text_pt": "Regra: Ninguem pode falar o nome de ninguem. Quem falar bebe!",
+      "text_en": "Rule: No one can say anyone's name. Anyone who does drinks!"
     },
     {
       "id": "39",
-      "category": "bebida",
-      "difficulty": "dificil",
-      "shots": 3,
-      "text_pt": "Beba sem usar as maos por 10 segundos",
-      "text_en": "Drink without using your hands for 10 seconds"
+      "category": "regra",
+      "difficulty": "medio",
+      "shots": 2,
+      "text_pt": "Regra: Nao pode apontar para ninguem. Quem apontar bebe!",
+      "text_en": "Rule: No pointing at anyone. Anyone who points drinks!"
     },
     {
       "id": "40",
-      "category": "coragem",
+      "category": "desafio",
       "difficulty": "medio",
       "shots": 2,
       "text_pt": "Faca uma careta e todo mundo tira foto",
@@ -322,11 +322,11 @@
     },
     {
       "id": "41",
-      "category": "grupo",
+      "category": "penalidade_max",
       "difficulty": "extremo",
       "shots": 5,
-      "text_pt": "Todos bebem 5 goles!",
-      "text_en": "Everyone takes 5 sips!"
+      "text_pt": "Beba 5 goles agora! Sem excecao!",
+      "text_en": "Take 5 sips now! No exceptions!"
     },
     {
       "id": "42",
@@ -338,7 +338,7 @@
     },
     {
       "id": "43",
-      "category": "coragem",
+      "category": "desafio",
       "difficulty": "dificil",
       "shots": 3,
       "text_pt": "Faca sua melhor impression de um animal e deixe o grupo adivinhar",
@@ -370,11 +370,11 @@
     },
     {
       "id": "47",
-      "category": "coragem",
+      "category": "penalidade_max",
       "difficulty": "extremo",
       "shots": 4,
-      "text_pt": "Poste algo vergonhoso no Instagram por 5 minutos",
-      "text_en": "Post something embarrassing on Instagram for 5 minutes"
+      "text_pt": "Beba sem usar as maos por 10 segundos!",
+      "text_en": "Drink without using your hands for 10 seconds!"
     },
     {
       "id": "48",
@@ -394,7 +394,7 @@
     },
     {
       "id": "50",
-      "category": "coragem",
+      "category": "desafio",
       "difficulty": "medio",
       "shots": 2,
       "text_pt": "Faca uma danca viral e todo mundo filmar",
@@ -410,30 +410,38 @@
     },
     {
       "id": "52",
-      "category": "bebida",
-      "difficulty": "dificil",
-      "shots": 3,
-      "text_pt": "Beba o que o grupo misturar",
-      "text_en": "Drink whatever the group mixes"
+      "category": "penalidade_max",
+      "difficulty": "extremo",
+      "shots": 4,
+      "text_pt": "Beba o que o grupo misturar!",
+      "text_en": "Drink whatever the group mixes!"
     },
     {
       "id": "53",
-      "category": "grupo",
-      "difficulty": "extremo",
-      "shots": 4,
-      "text_pt": "Todos que ja fizeram algo ilegal bebem",
-      "text_en": "Everyone who has done something illegal drinks"
+      "category": "seria_ou_beberia",
+      "difficulty": "medio",
+      "shots": 2,
+      "text_pt": "Voce preferiria poder ler a mente ou voar?",
+      "text_en": "Would you rather be able to read minds or fly?"
     },
     {
       "id": "54",
-      "category": "coragem",
+      "category": "regra",
+      "difficulty": "dificil",
+      "shots": 3,
+      "text_pt": "Regra: Ninguem pode cruzar os bracos. Quem cruzar bebe!",
+      "text_en": "Rule: No crossing arms. Anyone who crosses drinks!"
+    },
+    {
+      "id": "55",
+      "category": "desafio",
       "difficulty": "dificil",
       "shots": 3,
       "text_pt": "Faca uma serenata para o jogador da sua esquerda",
       "text_en": "Serenade the player to your left"
     },
     {
-      "id": "55",
+      "id": "56",
       "category": "verdade",
       "difficulty": "medio",
       "shots": 2,
@@ -441,7 +449,7 @@
       "text_en": "What's the silliest thing you've cried about?"
     },
     {
-      "id": "56",
+      "id": "57",
       "category": "bebida",
       "difficulty": "facil",
       "shots": 1,
@@ -449,20 +457,12 @@
       "text_en": "Swap drinks with someone for 5 minutes"
     },
     {
-      "id": "57",
-      "category": "grupo",
-      "difficulty": "dificil",
-      "shots": 3,
-      "text_pt": "Todos que ja beijaram mais de 3 pessoas aqui bebem",
-      "text_en": "Everyone who has kissed more than 3 people here drinks"
-    },
-    {
       "id": "58",
-      "category": "coragem",
+      "category": "seria_ou_beberia",
       "difficulty": "medio",
       "shots": 2,
-      "text_pt": "Faca uma propaganda de algo ridiculo por 30 segundos",
-      "text_en": "Do a 30-second commercial for something ridiculous"
+      "text_pt": "Voce preferiria sempre dizer a verdade ou sempre mentir?",
+      "text_en": "Would you rather always tell the truth or always lie?"
     },
     {
       "id": "59",
@@ -474,11 +474,11 @@
     },
     {
       "id": "60",
-      "category": "bebida",
-      "difficulty": "dificil",
-      "shots": 3,
-      "text_pt": "Beba de olhos fechados e adivinhe o que e",
-      "text_en": "Drink with your eyes closed and guess what it is"
+      "category": "penalidade_max",
+      "difficulty": "extremo",
+      "shots": 5,
+      "text_pt": "Beba de olhos fechados e adivinhe o que e!",
+      "text_en": "Drink with your eyes closed and guess what it is!"
     },
     {
       "id": "61",
@@ -490,11 +490,11 @@
     },
     {
       "id": "62",
-      "category": "coragem",
+      "category": "regra",
       "difficulty": "extremo",
       "shots": 4,
-      "text_pt": "Faca uma confession publica sobre algo inutil",
-      "text_en": "Make a public confession about something trivial"
+      "text_pt": "Regra: Ninguem pode rir. Quem rir bebe 3 goles!",
+      "text_en": "Rule: No laughing. Anyone who laughs takes 3 sips!"
     },
     {
       "id": "63",
@@ -514,7 +514,7 @@
     },
     {
       "id": "65",
-      "category": "grupo",
+      "category": "penalidade_max",
       "difficulty": "extremo",
       "shots": 5,
       "text_pt": "Rodada de shots para todos! Sem excecao!",
@@ -522,11 +522,11 @@
     },
     {
       "id": "66",
-      "category": "coragem",
-      "difficulty": "medio",
-      "shots": 2,
-      "text_pt": "Faca uma entrevista imaginaria com um famoso",
-      "text_en": "Do an imaginary interview with a celebrity"
+      "category": "seria_ou_beberia",
+      "difficulty": "dificil",
+      "shots": 3,
+      "text_pt": "Voce preferiria voltar no tempo ou poder ver o futuro?",
+      "text_en": "Would you rather go back in time or see the future?"
     },
     {
       "id": "67",
@@ -546,15 +546,15 @@
     },
     {
       "id": "69",
-      "category": "grupo",
-      "difficulty": "dificil",
-      "shots": 3,
-      "text_pt": "Todos que ja brigaram com amigo bebem",
-      "text_en": "Everyone who has fought with a friend drinks"
+      "category": "regra",
+      "difficulty": "medio",
+      "shots": 2,
+      "text_pt": "Regra: So pode falar em tom de voz baixo. Quem gritar bebe!",
+      "text_en": "Rule: Speak in a low voice only. Anyone who raises their voice drinks!"
     },
     {
       "id": "70",
-      "category": "coragem",
+      "category": "desafio",
       "difficulty": "dificil",
       "shots": 3,
       "text_pt": "Faca sua melhor impression de um personagem de filme",
@@ -570,23 +570,23 @@
     },
     {
       "id": "72",
-      "category": "bebida",
+      "category": "penalidade_max",
       "difficulty": "extremo",
       "shots": 4,
-      "text_pt": "Beba o conteudo inteiro do seu copo",
-      "text_en": "Drink the entire contents of your cup"
+      "text_pt": "Beba o conteudo inteiro do seu copo!",
+      "text_en": "Drink the entire contents of your cup!"
     },
     {
       "id": "73",
-      "category": "grupo",
+      "category": "seria_ou_beberia",
       "difficulty": "dificil",
       "shots": 3,
-      "text_pt": "Todos que ja usaram roupas do contrario bebem",
-      "text_en": "Everyone who has worn the opposite gender's clothes drinks"
+      "text_pt": "Voce preferiria ser invisivel ou ser capaz de ler a mente?",
+      "text_en": "Would you rather be invisible or be able to read minds?"
     },
     {
       "id": "74",
-      "category": "coragem",
+      "category": "desafio",
       "difficulty": "medio",
       "shots": 2,
       "text_pt": "Faca um rap sobre sua vida em 30 segundos",
@@ -602,11 +602,11 @@
     },
     {
       "id": "76",
-      "category": "bebida",
-      "difficulty": "medio",
-      "shots": 2,
-      "text_pt": "Beba de joelhos e faca uma oracao",
-      "text_en": "Kneel down and say a prayer before drinking"
+      "category": "regra",
+      "difficulty": "dificil",
+      "shots": 3,
+      "text_pt": "Regra: Ninguem pode se sentar. Quem sentar bebe!",
+      "text_en": "Rule: No sitting. Anyone who sits drinks!"
     },
     {
       "id": "77",
@@ -618,11 +618,11 @@
     },
     {
       "id": "78",
-      "category": "coragem",
+      "category": "penalidade_max",
       "difficulty": "extremo",
-      "shots": 4,
-      "text_pt": "Mande uma mensagem para seu chefe/professor elogiando",
-      "text_en": "Send a compliment message to your boss/teacher"
+      "shots": 5,
+      "text_pt": "Mande uma mensagem para seu chefe/professor elogiando!",
+      "text_en": "Send a compliment message to your boss/teacher!"
     },
     {
       "id": "79",
@@ -642,15 +642,15 @@
     },
     {
       "id": "81",
-      "category": "grupo",
-      "difficulty": "dificil",
-      "shots": 3,
-      "text_pt": "Todos que ja fizeram algo impulsivo bebem",
-      "text_en": "Everyone who has done something impulsive drinks"
+      "category": "seria_ou_beberia",
+      "difficulty": "medio",
+      "shots": 2,
+      "text_pt": "Voce preferiria nunca mais comer pizza ou nunca mais comer chocolate?",
+      "text_en": "Would you rather never eat pizza again or never eat chocolate again?"
     },
     {
       "id": "82",
-      "category": "coragem",
+      "category": "desafio",
       "difficulty": "medio",
       "shots": 2,
       "text_pt": "Faca uma danca coreografada com o jogador da direita",
@@ -682,14 +682,22 @@
     },
     {
       "id": "86",
-      "category": "coragem",
+      "category": "regra",
+      "difficulty": "medio",
+      "shots": 2,
+      "text_pt": "Regra: Ninguem pode usar palavras com mais de 3 silabas. Quem usar bebe!",
+      "text_en": "Rule: No words with more than 3 syllables. Anyone who does drinks!"
+    },
+    {
+      "id": "87",
+      "category": "desafio",
       "difficulty": "dificil",
       "shots": 3,
       "text_pt": "Faca uma ode poetica para o jogador mais velho",
       "text_en": "Recite a poetic ode to the oldest player"
     },
     {
-      "id": "87",
+      "id": "88",
       "category": "verdade",
       "difficulty": "medio",
       "shots": 2,
@@ -697,15 +705,39 @@
       "text_en": "What's the lamest excuse you've ever given?"
     },
     {
-      "id": "88",
-      "category": "bebida",
-      "difficulty": "medio",
-      "shots": 2,
-      "text_pt": "Beba de costas para o grupo e acerte o copo",
-      "text_en": "Drink facing away from the group and hit the cup"
+      "id": "89",
+      "category": "seria_ou_beberia",
+      "difficulty": "extremo",
+      "shots": 4,
+      "text_pt": "Voce preferiria viver sem musica ou sem filmes?",
+      "text_en": "Would you rather live without music or without movies?"
     },
     {
-      "id": "89",
+      "id": "90",
+      "category": "desafio",
+      "difficulty": "medio",
+      "shots": 2,
+      "text_pt": "Faca uma careta e deixe o grupo tirar foto",
+      "text_en": "Make a funny face and let the group take a photo"
+    },
+    {
+      "id": "91",
+      "category": "penalidade_max",
+      "difficulty": "extremo",
+      "shots": 4,
+      "text_pt": "Beba de costas para o grupo e acerte o copo!",
+      "text_en": "Drink facing away from the group and hit the cup!"
+    },
+    {
+      "id": "92",
+      "category": "regra",
+      "difficulty": "extremo",
+      "shots": 4,
+      "text_pt": "Regra: Ninguem pode usar as maos. Quem usar bebe!",
+      "text_en": "Rule: No using hands. Anyone who uses hands drinks!"
+    },
+    {
+      "id": "93",
       "category": "grupo",
       "difficulty": "extremo",
       "shots": 5,
@@ -713,12 +745,60 @@
       "text_en": "Final challenge: everyone drinks and starts over!"
     },
     {
-      "id": "90",
-      "category": "coragem",
+      "id": "94",
+      "category": "verdade",
       "difficulty": "medio",
       "shots": 2,
-      "text_pt": "Faca uma careta e deixe o grupo tirar foto",
-      "text_en": "Make a funny face and let the group take a photo"
+      "text_pt": "Qual foi a pior nota que ja tirou e o que aconteceu?",
+      "text_en": "What's the worst grade you've ever gotten and what happened?"
+    },
+    {
+      "id": "95",
+      "category": "seria_ou_beberia",
+      "difficulty": "medio",
+      "shots": 2,
+      "text_pt": "Voce preferiria sempre atrasar ou sempre chegar 30 min mais cedo?",
+      "text_en": "Would you rather always be late or always arrive 30 minutes early?"
+    },
+    {
+      "id": "96",
+      "category": "desafio",
+      "difficulty": "facil",
+      "shots": 1,
+      "text_pt": "Diga 5 coisas que voce gosta em 10 segundos",
+      "text_en": "Name 5 things you like in 10 seconds"
+    },
+    {
+      "id": "97",
+      "category": "penalidade_max",
+      "difficulty": "extremo",
+      "shots": 4,
+      "text_pt": "Beba o que o jogador da sua direita escolher!",
+      "text_en": "Drink what the player to your right chooses!"
+    },
+    {
+      "id": "98",
+      "category": "regra",
+      "difficulty": "facil",
+      "shots": 1,
+      "text_pt": "Regra: So pode responder com sim ou nao. Quem der outra resposta bebe!",
+      "text_en": "Rule: Only answer yes or no. Anyone who answers differently drinks!"
+    },
+    {
+      "id": "99",
+      "category": "verdade",
+      "difficulty": "dificil",
+      "shots": 3,
+      "text_pt": "Qual e o conselho mais bosta que ja recebeu?",
+      "text_en": "What's the worst advice you've ever received?"
+    },
+    {
+      "id": "100",
+      "category": "penalidade_max",
+      "difficulty": "extremo",
+      "shots": 5,
+      "text_pt": "Troque de bebida com o jogador mais longe e beba tudo!",
+      "text_en": "Swap drinks with the farthest player and drink it all!"
     }
   ]
 }

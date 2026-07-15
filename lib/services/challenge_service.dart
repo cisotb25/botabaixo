@@ -1,10 +1,12 @@
 import 'dart:convert';
+import 'dart:math';
 import 'package:flutter/services.dart';
 import '../models/challenge.dart';
 import 'storage_service.dart';
 
 class ChallengeService {
   static List<Challenge> _challenges = [];
+  static final _random = Random();
 
   static List<Challenge> get challenges => _challenges;
 
@@ -62,8 +64,7 @@ class ChallengeService {
       return null;
     }
 
-    final random = DateTime.now().millisecondsSinceEpoch;
-    return filteredChallenges[random % filteredChallenges.length];
+    return filteredChallenges[_random.nextInt(filteredChallenges.length)];
   }
 
   static List<Challenge> getRandomChallenges(int count,

@@ -42,7 +42,7 @@ class GameProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> startNewRound(List<Player> players, {GameMode mode = GameMode.normal}) async {
+  Future<void> startNewRound(List<Player> players, {GameMode mode = GameMode.normal, int customTurns = 4}) async {
     _isLoading = true;
     _error = null;
     _currentGameMode = mode;
@@ -59,7 +59,7 @@ class GameProvider extends ChangeNotifier {
       }
 
       // Generate challenges based on game mode
-      final challenges = _generateChallengesForRound(players, mode);
+      final challenges = _generateChallengesForRound(players, mode, customTurns: customTurns);
 
       _currentRound = GameRound(
         id: const Uuid().v4(),
@@ -78,9 +78,11 @@ class GameProvider extends ChangeNotifier {
     }
   }
 
-  List<RoundChallenge> _generateChallengesForRound(List<Player> players, GameMode mode) {
+  List<RoundChallenge> _generateChallengesForRound(List<Player> players, GameMode mode, {int customTurns = 4}) {
     final challenges = <RoundChallenge>[];
-    final config = GameModeConfig.getConfig(mode);
+    final config = mode == GameMode.custom
+        ? GameModeConfig.getCustomConfig(customTurns)
+        : GameModeConfig.getConfig(mode);
     final numChallenges = config.getTotalChallenges(players.length);
 
     // Shuffle players for random order
