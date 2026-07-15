@@ -128,13 +128,18 @@ class ActiveVirus {
   final String text;
   final Player assignedPlayer;
   final DateTime startedAt;
+  final int duration;
+  int roundsRemaining;
 
   ActiveVirus({
     required this.id,
     required this.text,
     required this.assignedPlayer,
+    this.duration = 10,
+    int? roundsRemaining,
     DateTime? startedAt,
-  }) : startedAt = startedAt ?? DateTime.now();
+  })  : roundsRemaining = roundsRemaining ?? duration,
+        startedAt = startedAt ?? DateTime.now();
 
   Map<String, dynamic> toMap() {
     return {
@@ -142,6 +147,8 @@ class ActiveVirus {
       'text': text,
       'assignedPlayer': assignedPlayer.toMap(),
       'startedAt': startedAt.toIso8601String(),
+      'duration': duration,
+      'roundsRemaining': roundsRemaining,
     };
   }
 
@@ -151,6 +158,8 @@ class ActiveVirus {
       text: map['text'],
       assignedPlayer: Player.fromMap(map['assignedPlayer']),
       startedAt: DateTime.parse(map['startedAt']),
+      duration: map['duration'] ?? 10,
+      roundsRemaining: map['roundsRemaining'] ?? map['duration'] ?? 10,
     );
   }
 }

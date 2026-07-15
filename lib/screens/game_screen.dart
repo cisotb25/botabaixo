@@ -148,7 +148,7 @@ class _GameScreenState extends State<GameScreen> {
                           const Text('🦠', style: TextStyle(fontSize: 14)),
                           const SizedBox(width: 4),
                           Text(
-                            'Virus (${gameProvider.activeViruses.length})',
+                            'Virus (${gameProvider.activeViruses.first.roundsRemaining}r)',
                             style: const TextStyle(
                               color: Color(0xFFFFEB3B),
                               fontWeight: FontWeight.bold,
@@ -351,13 +351,33 @@ class _GameScreenState extends State<GameScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    virus.assignedPlayer.name,
-                    style: const TextStyle(
-                      color: Color(0xFFFFEB3B),
-                      fontWeight: FontWeight.bold,
-                      fontSize: 12,
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        virus.assignedPlayer.name,
+                        style: const TextStyle(
+                          color: Color(0xFFFFEB3B),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 12,
+                        ),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                        decoration: BoxDecoration(
+                          color: const Color(0xFFFFEB3B).withValues(alpha: 0.3),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Text(
+                          '${virus.roundsRemaining}r',
+                          style: const TextStyle(
+                            color: Color(0xFFFFEB3B),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 11,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                   const SizedBox(height: 4),
                   Text(

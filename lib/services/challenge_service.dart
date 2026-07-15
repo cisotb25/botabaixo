@@ -62,7 +62,7 @@ class ChallengeService {
     final virusCount = (totalCards * 0.20).round();
     final bottomsUpCount = totalCards - normalCount - gameCount - virusCount;
 
-    // Phase 1: Build non-virus cards (shuffled)
+    // Build non-virus cards (shuffled)
     final nonVirusDeck = <Challenge>[];
     for (int i = 0; i < normalCount; i++) {
       nonVirusDeck.add(_getChallengeByType('normal'));
@@ -75,29 +75,19 @@ class ChallengeService {
     }
     nonVirusDeck.shuffle(_random);
 
-    // Phase 2: Build virus pairs (start + end together, never shuffled apart)
+    // Add virus_start cards only (no virus_end - they auto-expire after 5-15 rounds)
     final virusStarts = _challenges.where((c) => c.type == 'virus_start').toList();
-    final virusEnds = _challenges.where((c) => c.type == 'virus_end').toList();
-
-    final virusPairs = <List<Challenge>>[];
-    if (virusCount >= 2 && virusStarts.isNotEmpty && virusEnds.isNotEmpty) {
-      final pairs = virusCount ~/ 2;
-      for (int i = 0; i < pairs; i++) {
-        final start = virusStarts[_random.nextInt(virusStarts.length)];
-        final end = virusEnds[_random.nextInt(virusEnds.length)];
-        virusPairs.add([start, end]);
-      }
+    final virusCards = <Challenge>[];
+    for (int i = 0; i < virusCount && virusStarts.isNotEmpty; i++) {
+      virusCards.add(virusStarts[_random.nextInt(virusStarts.length)]);
     }
-    virusPairs.shuffle(_random);
 
-    // Phase 3: Insert virus pairs into non-virus deck at random positions
-    // Each pair is inserted as a unit: [start, end] stays together
+    // Insert virus cards at random positions in the deck
     final deck = List<Challenge>.from(nonVirusDeck);
-    for (final pair in virusPairs) {
-      // Pick a random insertion point (must leave room for both cards)
+    for (final virus in virusCards) {
       final maxIndex = deck.length;
       final insertIndex = _random.nextInt(maxIndex + 1);
-      deck.insertAll(insertIndex, pair);
+      deck.insert(insertIndex, virus);
     }
 
     return deck;

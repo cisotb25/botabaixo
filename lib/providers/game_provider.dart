@@ -71,7 +71,7 @@ class GameProvider extends ChangeNotifier {
           : GameModeConfig.getConfig(mode);
       final totalChallenges = config.getTotalChallenges(players.length);
 
-      // Generate a shuffled deck of challenges
+      // Generate a shuffled deck of challenges (virus_end cards are NOT included)
       final deck = ChallengeService.generateDeck(totalChallenges);
 
       // Shuffle players for random order
@@ -96,9 +96,6 @@ class GameProvider extends ChangeNotifier {
         ));
       }
 
-      // Post-process: pair virus_start and virus_end to same player
-      _pairVirusCards(roundChallenges, shuffledPlayers);
-
       _currentRound = GameRound(
         id: const Uuid().v4(),
         players: players,
@@ -113,27 +110,6 @@ class GameProvider extends ChangeNotifier {
       _error = 'Erro ao iniciar rodada: $e';
       _isLoading = false;
       notifyListeners();
-    }
-  }
-
-  void _pairVirusCards(List<RoundChallenge> challenges, List<Player> players) {
-    // Virus pairs are already adjacent in the deck (guaranteed by generateDeck).
-    // Just ensure each virus_end gets the same player as its preceding virus_start.
-    for (int i = 0; i < challenges.length; i++) {
-      if (challenges[i].challenge.isVirusEnd) {
-        // Look backwards for the most recent virus_start
-        for (int j = i - 1; j >= 0; j--) {
-          if (challenges[j].challenge.isVirusStart) {
-            challenges[i] = RoundChallenge(
-              challenge: challenges[i].challenge,
-              assignedPlayer: challenges[j].assignedPlayer,
-            );
-            break;
-          }
-          // Stop if we hit another virus_end (shouldn't happen with paired deck)
-          if (challenges[j].challenge.isVirusEnd) break;
-        }
-      }
     }
   }
 
@@ -157,30 +133,29 @@ class GameProvider extends ChangeNotifier {
       if (currentChallenge != null) {
         currentChallenge.complete();
 
-        // Handle virus cards
+        // Handle virus start cards
         if (currentChallenge.challenge.isVirusStart) {
-          // Add new virus for this player
           final text = currentChallenge.challenge.textPT;
           final playerName = currentChallenge.assignedPlayer.name;
+          final randomDuration = 5 + Random().nextInt(11); // 5 to 15
           _activeViruses.add(ActiveVirus(
             id: const Uuid().v4(),
             text: text.replaceAll('{player}', playerName),
             assignedPlayer: currentChallenge.assignedPlayer,
+            duration: randomDuration,
+            roundsRemaining: randomDuration,
           ));
-        } else if (currentChallenge.challenge.isVirusEnd) {
-          // Only remove if there's an active virus for this player
-          final playerId = currentChallenge.assignedPlayer.id;
-          final hasVirus = _activeViruses.any((v) => v.assignedPlayer.id == playerId);
-          if (hasVirus) {
-            for (int i = _activeViruses.length - 1; i >= 0; i--) {
-              if (_activeViruses[i].assignedPlayer.id == playerId) {
-                _activeViruses.removeAt(i);
-                break;
-              }
-            }
-          }
-          // If no active virus for this player, the end card is silently skipped
         }
+
+        // Decrement all active virus counters
+        final expiredIds = <String>[];
+        for (final virus in _activeViruses) {
+          virus.roundsRemaining--;
+          if (virus.roundsRemaining <= 0) {
+            expiredIds.add(virus.id);
+          }
+        }
+        _activeViruses.removeWhere((v) => expiredIds.contains(v.id));
 
         _currentChallengeIndex++;
 

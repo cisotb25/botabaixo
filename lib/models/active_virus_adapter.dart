@@ -18,12 +18,14 @@ class ActiveVirusAdapter extends TypeAdapter<ActiveVirus> {
       text: fields[1] as String,
       assignedPlayer: (fields[2] is Player) ? fields[2] as Player : Player.fromMap(fields[2] as Map<String, dynamic>),
       startedAt: fields[3] as DateTime,
+      duration: fields[4] as int? ?? 10,
+      roundsRemaining: fields[5] as int? ?? fields[4] as int? ?? 10,
     );
   }
 
   @override
   void write(BinaryWriter writer, ActiveVirus obj) {
-    writer.writeByte(4);
+    writer.writeByte(6);
     writer.writeByte(0);
     writer.write(obj.id);
     writer.writeByte(1);
@@ -32,6 +34,10 @@ class ActiveVirusAdapter extends TypeAdapter<ActiveVirus> {
     writer.write(obj.assignedPlayer);
     writer.writeByte(3);
     writer.write(obj.startedAt);
+    writer.writeByte(4);
+    writer.write(obj.duration);
+    writer.writeByte(5);
+    writer.write(obj.roundsRemaining);
   }
 
   @override
