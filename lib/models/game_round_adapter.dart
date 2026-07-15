@@ -16,10 +16,8 @@ class GameRoundAdapter extends TypeAdapter<GameRound> {
     }
     return GameRound(
       id: fields[0] as String,
-      players: (fields[1] as List).map((p) => Player.fromMap(p)).toList(),
-      challenges: (fields[2] as List)
-          .map((c) => RoundChallenge.fromMap(c))
-          .toList(),
+      players: (fields[1] as List).cast<Player>().toList(),
+      challenges: (fields[2] as List).cast<RoundChallenge>().toList(),
       startedAt: fields[3] as DateTime,
       endedAt: fields[4] as DateTime?,
       isActive: fields[5] as bool,
@@ -66,8 +64,8 @@ class RoundChallengeAdapter extends TypeAdapter<RoundChallenge> {
       fields[reader.readByte()] = reader.read();
     }
     return RoundChallenge(
-      challenge: fields[0] as Challenge,
-      assignedPlayer: fields[1] as Player,
+      challenge: (fields[0] is Challenge) ? fields[0] as Challenge : Challenge.fromMap(fields[0] as Map<String, dynamic>),
+      assignedPlayer: (fields[1] is Player) ? fields[1] as Player : Player.fromMap(fields[1] as Map<String, dynamic>),
       isCompleted: fields[2] as bool,
       completedAt: fields[3] as DateTime?,
     );
