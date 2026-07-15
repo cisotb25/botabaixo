@@ -33,7 +33,9 @@ class Challenge extends HiveObject {
     this.giveSipsAmount = 0,
   });
 
-  bool get isVirus => type == 'virus';
+  bool get isVirus => type == 'virus' || type == 'virus_start' || type == 'virus_end';
+  bool get isVirusStart => type == 'virus_start';
+  bool get isVirusEnd => type == 'virus_end';
   bool get isBottomsUp => type == 'bottoms_up';
   bool get isGame => type == 'game';
   bool get isNormal => type == 'normal';
@@ -44,6 +46,10 @@ class Challenge extends HiveObject {
         return '🍺';
       case 'game':
         return '🎮';
+      case 'virus_start':
+        return '🦠';
+      case 'virus_end':
+        return '🦠';
       case 'virus':
         return '🦠';
       case 'bottoms_up':
@@ -59,6 +65,10 @@ class Challenge extends HiveObject {
         return 'Normal';
       case 'game':
         return 'Jogo';
+      case 'virus_start':
+        return 'Virus';
+      case 'virus_end':
+        return 'Virus';
       case 'virus':
         return 'Virus';
       case 'bottoms_up':
@@ -74,6 +84,10 @@ class Challenge extends HiveObject {
         return 'Normal';
       case 'game':
         return 'Game';
+      case 'virus_start':
+        return 'Virus';
+      case 'virus_end':
+        return 'Virus';
       case 'virus':
         return 'Virus';
       case 'bottoms_up':

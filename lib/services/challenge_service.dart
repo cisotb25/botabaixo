@@ -58,12 +58,11 @@ class ChallengeService {
   static List<Challenge> generateDeck(int totalCards) {
     final List<Challenge> deck = [];
 
-    // Distribution: 65% normal, 15% game, 12% virus start, 8% virus stop, 10% bottoms_up
-    final normalCount = (totalCards * 0.55).round();
-    final gameCount = (totalCards * 0.15).round();
-    final virusCount = (totalCards * 0.15).round();
-    final bottomsUpCount = (totalCards * 0.10).round();
-    final fillerCount = totalCards - normalCount - gameCount - virusCount - bottomsUpCount;
+    // Distribution: 40% normal, 30% game, 20% virus, 10% bottoms_up
+    final normalCount = (totalCards * 0.40).round();
+    final gameCount = (totalCards * 0.30).round();
+    final virusCount = (totalCards * 0.20).round();
+    final bottomsUpCount = totalCards - normalCount - gameCount - virusCount;
 
     // Add normal challenges
     for (int i = 0; i < normalCount; i++) {
@@ -75,31 +74,29 @@ class ChallengeService {
       deck.add(_getChallengeByType('game'));
     }
 
-    // Add virus challenges (mix of start and stop)
-    final virusChallenges = _challenges.where((c) => c.type == 'virus').toList();
-    if (virusChallenges.isNotEmpty) {
-      final virusStarts = virusChallenges.where((c) => !c.textPT.toLowerCase().contains('acabou') && !c.textPT.toLowerCase().contains('fim')).toList();
-      final virusStops = virusChallenges.where((c) => c.textPT.toLowerCase().contains('acabou') || c.textPT.toLowerCase().contains('fim')).toList();
+    // Add virus challenges (start cards first, end cards later)
+    final virusStarts = _challenges.where((c) => c.type == 'virus_start').toList();
+    final virusEnds = _challenges.where((c) => c.type == 'virus_end').toList();
 
-      for (int i = 0; i < virusCount; i++) {
-        if (i.isEven && virusStarts.isNotEmpty) {
-          deck.add(virusStarts[_random.nextInt(virusStarts.length)]);
-        } else if (virusStops.isNotEmpty) {
-          deck.add(virusStops[_random.nextInt(virusStops.length)]);
-        } else {
-          deck.add(_getChallengeByType('virus'));
+    if (virusCount > 0 && virusStarts.isNotEmpty) {
+      // Add start cards in first half of virus section
+      final halfVirus = (virusCount / 2).ceil();
+      for (int i = 0; i < halfVirus && i < virusStarts.length; i++) {
+        deck.add(virusStarts[_random.nextInt(virusStarts.length)]);
+      }
+
+      // Add end cards in second half (ensures start comes before end)
+      final remainingVirus = virusCount - halfVirus;
+      if (virusEnds.isNotEmpty) {
+        for (int i = 0; i < remainingVirus; i++) {
+          deck.add(virusEnds[_random.nextInt(virusEnds.length)]);
         }
       }
     }
 
-    // Add bottoms up (rare)
+    // Add bottoms up
     for (int i = 0; i < bottomsUpCount; i++) {
       deck.add(_getChallengeByType('bottoms_up'));
-    }
-
-    // Fill remaining with random challenges
-    for (int i = 0; i < fillerCount; i++) {
-      deck.add(_challenges[_random.nextInt(_challenges.length)]);
     }
 
     // Shuffle the deck
@@ -110,12 +107,12 @@ class ChallengeService {
 
   static List<Challenge> _getDefaultChallenges() {
     return [
-      Challenge(id: '1', type: 'normal', textPT: 'Se voce ja mentiu, beba 2 goles', textEN: "If you've lied, take 2 sips", sips: 2),
-      Challenge(id: '2', type: 'normal', textPT: 'Se voce ja chegou atrasado, beba 3 goles', textEN: "If you've been late, take 3 sips", sips: 3),
+      Challenge(id: '1', type: 'normal', textPT: 'Se você já mentiu, beba 2 goles', textEN: "If you've lied, take 2 sips", sips: 2),
+      Challenge(id: '2', type: 'normal', textPT: 'Se você já chegou atrasado, beba 3 goles', textEN: "If you've been late, take 3 sips", sips: 3),
       Challenge(id: '3', type: 'game', textPT: 'Vai passando e listando frutas. Quem errar bebe 2 goles!', textEN: "Pass around naming fruits. Wrong answer drinks 2 sips!", sips: 2),
-      Challenge(id: '4', type: 'virus', textPT: 'Agora so pode falar baixo!', textEN: "You can only speak softly now!", sips: 0),
-      Challenge(id: '5', type: 'virus', textPT: 'O virus acabou!', textEN: "The virus is over!", sips: 0),
-      Challenge(id: '6', type: 'bottoms_up', textPT: 'Bebe tudo!', textEN: "Drink it all!", sips: 0),
+      Challenge(id: '4', type: 'virus_start', textPT: 'Agora só pode falar baixo!', textEN: "You can only speak softly now!"},
+      Challenge(id: '5', type: 'virus_end', textPT: 'O vírus acabou!', textEN: "The virus is over!"},
+      Challenge(id: '6', type: 'bottoms_up', textPT: 'Bebe tudo!', textEN: "Drink it all!"},
     ];
   }
 }

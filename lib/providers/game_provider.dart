@@ -119,24 +119,18 @@ class GameProvider extends ChangeNotifier {
         currentChallenge.complete();
 
         // Handle virus cards
-        if (currentChallenge.challenge.isVirus) {
+        if (currentChallenge.challenge.isVirusStart) {
+          // Add new virus
           final text = currentChallenge.challenge.textPT;
-          final isStopVirus = text.toLowerCase().contains('acabou') ||
-              text.toLowerCase().contains('fim') ||
-              text.toLowerCase().contains('over');
-
-          if (isStopVirus) {
-            // Remove the most recent virus
-            if (_activeViruses.isNotEmpty) {
-              _activeViruses.removeLast();
-            }
-          } else {
-            // Add new virus
-            _activeViruses.add(ActiveVirus(
-              id: const Uuid().v4(),
-              text: text.replaceAll('{player}', currentChallenge.assignedPlayer.name),
-              assignedPlayer: currentChallenge.assignedPlayer,
-            ));
+          _activeViruses.add(ActiveVirus(
+            id: const Uuid().v4(),
+            text: text.replaceAll('{player}', currentChallenge.assignedPlayer.name),
+            assignedPlayer: currentChallenge.assignedPlayer,
+          ));
+        } else if (currentChallenge.challenge.isVirusEnd) {
+          // Remove the most recent virus
+          if (_activeViruses.isNotEmpty) {
+            _activeViruses.removeLast();
           }
         }
 
