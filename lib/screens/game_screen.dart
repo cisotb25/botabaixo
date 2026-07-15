@@ -112,7 +112,7 @@ class _GameScreenState extends State<GameScreen> {
       onTap: () => _onTap(gameProvider),
       behavior: HitTestBehavior.opaque,
       child: Padding(
-        padding: const EdgeInsets.all(24.0),
+        padding: EdgeInsets.fromLTRB(24, 24, 24, MediaQuery.of(context).padding.bottom + 24),
         child: Column(
           children: [
             // Progress indicator
@@ -273,7 +273,7 @@ class _GameScreenState extends State<GameScreen> {
     GameProvider gameProvider,
   ) {
     return Padding(
-      padding: const EdgeInsets.all(24.0),
+      padding: EdgeInsets.fromLTRB(24, 24, 24, MediaQuery.of(context).padding.bottom + 24),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

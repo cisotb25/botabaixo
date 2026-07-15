@@ -3,7 +3,7 @@ import 'player.dart';
 import 'challenge.dart';
 
 @HiveType(typeId: 2)
-class GameRound extends HiveObject {
+class GameRound {
   @HiveField(0)
   final String id;
 
@@ -66,7 +66,7 @@ class GameRound extends HiveObject {
 }
 
 @HiveType(typeId: 3)
-class RoundChallenge extends HiveObject {
+class RoundChallenge {
   @HiveField(0)
   final Challenge challenge;
 
@@ -89,7 +89,6 @@ class RoundChallenge extends HiveObject {
   void complete() {
     isCompleted = true;
     completedAt = DateTime.now();
-    save();
   }
 
   Map<String, dynamic> toMap() {
