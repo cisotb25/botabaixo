@@ -21,12 +21,15 @@ class GameRoundAdapter extends TypeAdapter<GameRound> {
       startedAt: fields[3] as DateTime,
       endedAt: fields[4] as DateTime?,
       isActive: fields[5] as bool,
+      activeViruses: fields[6] != null
+          ? (fields[6] as List).cast<ActiveVirus>().toList()
+          : [],
     );
   }
 
   @override
   void write(BinaryWriter writer, GameRound obj) {
-    writer.writeByte(6); // number of fields
+    writer.writeByte(7); // number of fields
     writer.writeByte(0);
     writer.write(obj.id);
     writer.writeByte(1);
@@ -39,6 +42,8 @@ class GameRoundAdapter extends TypeAdapter<GameRound> {
     writer.write(obj.endedAt);
     writer.writeByte(5);
     writer.write(obj.isActive);
+    writer.writeByte(6);
+    writer.write(obj.activeViruses);
   }
 
   @override

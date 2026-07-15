@@ -7,6 +7,7 @@ import '../models/player_adapter.dart';
 import '../models/challenge_adapter.dart';
 import '../models/game_round_adapter.dart';
 import '../models/player_group_adapter.dart';
+import '../models/active_virus_adapter.dart';
 import 'firebase_service.dart';
 import '../utils/logger.dart';
 
@@ -26,6 +27,17 @@ class StorageService {
     Hive.registerAdapter(GameRoundAdapter());
     Hive.registerAdapter(RoundChallengeAdapter());
     Hive.registerAdapter(PlayerGroupAdapter());
+    Hive.registerAdapter(ActiveVirusAdapter());
+
+    // Clear old game rounds to avoid adapter conflicts
+    try {
+      await Hive.openBox<GameRound>(gameRoundsBox);
+      await Hive.box<GameRound>(gameRoundsBox).clear();
+      await Hive.openBox<Challenge>(challengesBox);
+      await Hive.box<Challenge>(challengesBox).clear();
+    } catch (e) {
+      // Box might not exist yet, that's fine
+    }
 
     // Open boxes
     await Hive.openBox<Player>(playersBox);
@@ -75,15 +87,9 @@ class StorageService {
     return getChallengesBox().values.toList();
   }
 
-  static List<Challenge> getChallengesByCategory(String category) {
+  static List<Challenge> getChallengesByType(String type) {
     return getAllChallenges()
-        .where((challenge) => challenge.category == category)
-        .toList();
-  }
-
-  static List<Challenge> getChallengesByDifficulty(String difficulty) {
-    return getAllChallenges()
-        .where((challenge) => challenge.difficulty == difficulty)
+        .where((challenge) => challenge.type == type)
         .toList();
   }
 

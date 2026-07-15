@@ -259,58 +259,36 @@ class _GameSetupSheetState extends State<_GameSetupSheet> {
                   ),
                   const SizedBox(height: 8),
                   Row(
-                    children: GameModeConfig.allModes.map((config) {
-                      final isSelected = _selectedMode == config.mode;
-                      return Expanded(
+                    children: [
+                      // Quick mode
+                      Expanded(
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                          child: GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                _selectedMode = config.mode;
-                              });
-                            },
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(vertical: 12),
-                              decoration: BoxDecoration(
-                                color: isSelected
-                                    ? const Color(0xFF6A1B9A)
-                                    : Colors.grey[800],
-                                borderRadius: BorderRadius.circular(12),
-                                border: Border.all(
-                                  color: isSelected
-                                      ? const Color(0xFF6A1B9A)
-                                      : Colors.grey[600]!,
-                                ),
-                              ),
-                              child: Column(
-                                children: [
-                                  Text(
-                                    config.name,
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: isSelected
-                                          ? Colors.white
-                                          : Colors.grey[400],
-                                    ),
-                                  ),
-                                  const SizedBox(height: 4),
-                                  Text(
-                                    '${config.turnsPerPlayer}x',
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      color: isSelected
-                                          ? Colors.white70
-                                          : Colors.grey[500],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
+                          child: _buildModeButton('Rapido', '2x', GameMode.quick),
                         ),
-                      );
-                    }).toList(),
+                      ),
+                      // Normal mode
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                          child: _buildModeButton('Normal', '4x', GameMode.normal),
+                        ),
+                      ),
+                      // Long mode
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                          child: _buildModeButton('Longo', '6x', GameMode.long),
+                        ),
+                      ),
+                      // Custom mode
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                          child: _buildModeButton('Custom', '$_customTurns x', GameMode.custom),
+                        ),
+                      ),
+                    ],
                   ),
                   const SizedBox(height: 8),
 
@@ -499,6 +477,47 @@ class _GameSetupSheetState extends State<_GameSetupSheet> {
           ],
         );
       },
+    );
+  }
+
+  Widget _buildModeButton(String label, String sublabel, GameMode mode) {
+    final isSelected = _selectedMode == mode;
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          _selectedMode = mode;
+        });
+      },
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 10),
+        decoration: BoxDecoration(
+          color: isSelected ? const Color(0xFF6A1B9A) : Colors.grey[800],
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(
+            color: isSelected ? const Color(0xFF6A1B9A) : Colors.grey[600]!,
+          ),
+        ),
+        child: Column(
+          children: [
+            Text(
+              label,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 12,
+                color: isSelected ? Colors.white : Colors.grey[400],
+              ),
+            ),
+            const SizedBox(height: 2),
+            Text(
+              sublabel,
+              style: TextStyle(
+                fontSize: 11,
+                color: isSelected ? Colors.white70 : Colors.grey[500],
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

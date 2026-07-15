@@ -14,29 +14,32 @@ class ChallengeAdapter extends TypeAdapter<Challenge> {
     }
     return Challenge(
       id: fields[0] as String,
-      category: fields[1] as String,
-      difficulty: fields[2] as String,
-      shots: fields[3] as int,
-      textPT: fields[4] as String,
-      textEN: fields[5] as String,
+      type: fields[1] as String,
+      textPT: fields[2] as String,
+      textEN: fields[3] as String,
+      sips: fields[4] as int,
+      giveSips: fields[5] as bool,
+      giveSipsAmount: fields[6] as int,
     );
   }
 
   @override
   void write(BinaryWriter writer, Challenge obj) {
-    writer.writeByte(6); // number of fields
+    writer.writeByte(7); // number of fields
     writer.writeByte(0);
     writer.write(obj.id);
     writer.writeByte(1);
-    writer.write(obj.category);
+    writer.write(obj.type);
     writer.writeByte(2);
-    writer.write(obj.difficulty);
-    writer.writeByte(3);
-    writer.write(obj.shots);
-    writer.writeByte(4);
     writer.write(obj.textPT);
-    writer.writeByte(5);
+    writer.writeByte(3);
     writer.write(obj.textEN);
+    writer.writeByte(4);
+    writer.write(obj.sips);
+    writer.writeByte(5);
+    writer.write(obj.giveSips);
+    writer.writeByte(6);
+    writer.write(obj.giveSipsAmount);
   }
 
   @override

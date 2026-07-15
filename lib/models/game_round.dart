@@ -22,6 +22,9 @@ class GameRound {
   @HiveField(5)
   bool isActive;
 
+  @HiveField(6)
+  final List<ActiveVirus> activeViruses;
+
   GameRound({
     required this.id,
     required this.players,
@@ -29,11 +32,13 @@ class GameRound {
     DateTime? startedAt,
     this.endedAt,
     this.isActive = true,
+    List<ActiveVirus>? activeViruses,
   })  : challenges = challenges ?? [],
+        activeViruses = activeViruses ?? [],
         startedAt = startedAt ?? DateTime.now();
 
-  int get totalShots {
-    return challenges.fold(0, (sum, challenge) => sum + challenge.challenge.shots);
+  int get totalSips {
+    return challenges.fold(0, (sum, c) => sum + c.challenge.sips);
   }
 
   int get completedChallenges {
@@ -48,6 +53,7 @@ class GameRound {
       'startedAt': startedAt.toIso8601String(),
       'endedAt': endedAt?.toIso8601String(),
       'isActive': isActive,
+      'activeViruses': activeViruses.map((v) => v.toMap()).toList(),
     };
   }
 
@@ -61,6 +67,11 @@ class GameRound {
       startedAt: DateTime.parse(map['startedAt']),
       endedAt: map['endedAt'] != null ? DateTime.parse(map['endedAt']) : null,
       isActive: map['isActive'],
+      activeViruses: map['activeViruses'] != null
+          ? (map['activeViruses'] as List)
+              .map((v) => ActiveVirus.fromMap(v))
+              .toList()
+          : [],
     );
   }
 }
@@ -108,6 +119,38 @@ class RoundChallenge {
       completedAt: map['completedAt'] != null
           ? DateTime.parse(map['completedAt'])
           : null,
+    );
+  }
+}
+
+class ActiveVirus {
+  final String id;
+  final String text;
+  final Player assignedPlayer;
+  final DateTime startedAt;
+
+  ActiveVirus({
+    required this.id,
+    required this.text,
+    required this.assignedPlayer,
+    DateTime? startedAt,
+  }) : startedAt = startedAt ?? DateTime.now();
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'text': text,
+      'assignedPlayer': assignedPlayer.toMap(),
+      'startedAt': startedAt.toIso8601String(),
+    };
+  }
+
+  factory ActiveVirus.fromMap(Map<String, dynamic> map) {
+    return ActiveVirus(
+      id: map['id'],
+      text: map['text'],
+      assignedPlayer: Player.fromMap(map['assignedPlayer']),
+      startedAt: DateTime.parse(map['startedAt']),
     );
   }
 }

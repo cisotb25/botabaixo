@@ -42,7 +42,7 @@ class _GameScreenState extends State<GameScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Modo Desafio'),
+        title: const Text('Botabaixo'),
         actions: [
           IconButton(
             onPressed: () => _showEndRoundDialog(context),
@@ -107,8 +107,8 @@ class _GameScreenState extends State<GameScreen> {
     RoundChallenge currentChallenge,
     GameProvider gameProvider,
   ) {
-    final isGroupChallenge =
-        currentChallenge.challenge.category == 'grupo';
+    final challenge = currentChallenge.challenge;
+    final typeColor = Color(challenge.colorValue);
 
     return GestureDetector(
       onTap: () => _onTap(gameProvider),
@@ -122,19 +122,61 @@ class _GameScreenState extends State<GameScreen> {
               value: gameProvider.currentChallengeIndex /
                   gameProvider.currentRound!.challenges.length,
               backgroundColor: Colors.grey[800],
-              valueColor:
-                  const AlwaysStoppedAnimation<Color>(Color(0xFF6A1B9A)),
+              valueColor: AlwaysStoppedAnimation<Color>(typeColor),
             ),
             const SizedBox(height: 8),
             Text(
               'Desafio ${gameProvider.currentChallengeIndex + 1} de ${gameProvider.currentRound!.challenges.length}',
               style: TextStyle(color: Colors.grey[400]),
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: 16),
 
-            // Player name or "Everyone"
+            // Active viruses banner
+            if (gameProvider.activeViruses.isNotEmpty)
+              Container(
+                width: double.infinity,
+                margin: const EdgeInsets.only(bottom: 16),
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: const Color(0xFF9C27B0).withValues(alpha: 0.2),
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: const Color(0xFF9C27B0)),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        const Text('🦠', style: TextStyle(fontSize: 20)),
+                        const SizedBox(width: 8),
+                        Text(
+                          'Virus Ativo${gameProvider.activeViruses.length > 1 ? 's' : ''}',
+                          style: const TextStyle(
+                            color: Color(0xFF9C27B0),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 8),
+                    ...gameProvider.activeViruses.map((virus) => Padding(
+                      padding: const EdgeInsets.only(bottom: 4),
+                      child: Text(
+                        virus.text,
+                        style: const TextStyle(
+                          color: Colors.white70,
+                          fontSize: 13,
+                        ),
+                      ),
+                    )),
+                  ],
+                ),
+              ),
+
+            // Player name
             Text(
-              isGroupChallenge ? 'Todos' : currentChallenge.assignedPlayer.name,
+              currentChallenge.assignedPlayer.name,
               style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
@@ -144,39 +186,21 @@ class _GameScreenState extends State<GameScreen> {
             const SizedBox(height: 8),
 
             // Pronoun tag
-            if (!isGroupChallenge)
-              Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                decoration: BoxDecoration(
-                  color: const Color(0xFF6A1B9A).withValues(alpha: 0.3),
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Text(
-                  currentChallenge.assignedPlayer.pronounPT,
-                  style: const TextStyle(
-                    color: Color(0xFF6A1B9A),
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              )
-            else
-              Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                decoration: BoxDecoration(
-                  color: const Color(0xFFFF6D00).withValues(alpha: 0.3),
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: const Text(
-                  'Todos',
-                  style: TextStyle(
-                    color: Color(0xFFFF6D00),
-                    fontWeight: FontWeight.w500,
-                  ),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+              decoration: BoxDecoration(
+                color: typeColor.withValues(alpha: 0.3),
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Text(
+                currentChallenge.assignedPlayer.pronounPT,
+                style: TextStyle(
+                  color: typeColor,
+                  fontWeight: FontWeight.w500,
                 ),
               ),
-            const SizedBox(height: 32),
+            ),
+            const SizedBox(height: 24),
 
             // Challenge card
             Expanded(
@@ -187,26 +211,26 @@ class _GameScreenState extends State<GameScreen> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      // Category icon
+                      // Type icon
                       Text(
-                        currentChallenge.challenge.getCategoryIcon(),
+                        challenge.icon,
                         style: const TextStyle(fontSize: 64),
                       ),
                       const SizedBox(height: 16),
 
-                      // Category name
+                      // Type badge
                       Container(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 16, vertical: 8),
                         decoration: BoxDecoration(
-                          color: Color(currentChallenge.challenge.getCategoryColorValue()).withValues(alpha: 0.2),
+                          color: typeColor.withValues(alpha: 0.2),
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: Text(
-                          currentChallenge.challenge.getCategoryNamePT(),
+                          challenge.typeNamePT,
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
-                            color: Color(currentChallenge.challenge.getCategoryColorValue()),
+                            color: typeColor,
                           ),
                         ),
                       ),
@@ -214,7 +238,9 @@ class _GameScreenState extends State<GameScreen> {
 
                       // Challenge text
                       Text(
-                        currentChallenge.challenge.textPT,
+                        challenge.getText(
+                          currentChallenge.assignedPlayer.name,
+                        ),
                         style: Theme.of(context)
                             .textTheme
                             .headlineSmall
@@ -225,29 +251,86 @@ class _GameScreenState extends State<GameScreen> {
                       ),
                       const SizedBox(height: 24),
 
-                      // Shots indicator
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: List.generate(
-                          currentChallenge.challenge.shots,
-                          (index) => const Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 4),
-                            child: Icon(
+                      // Sips indicator
+                      if (challenge.sips > 0)
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
                               Icons.local_bar,
-                              color: Color(0xFFFF6D00),
+                              color: typeColor,
                               size: 32,
+                            ),
+                            const SizedBox(width: 8),
+                            Text(
+                              '${challenge.sips} gole(s)',
+                              style: TextStyle(
+                                color: typeColor,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18,
+                              ),
+                            ),
+                          ],
+                        ),
+
+                      // Give sips indicator
+                      if (challenge.giveSips)
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Icon(
+                              Icons.redeem,
+                              color: Color(0xFF00BFA5),
+                              size: 32,
+                            ),
+                            const SizedBox(width: 8),
+                            Text(
+                              'De ${challenge.giveSipsAmount} gole(s) para alguem',
+                              style: const TextStyle(
+                                color: Color(0xFF00BFA5),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18,
+                              ),
+                            ),
+                          ],
+                        ),
+
+                      // Virus type - show special label
+                      if (challenge.isVirus)
+                        Container(
+                          margin: const EdgeInsets.only(top: 16),
+                          padding: const EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFF9C27B0).withValues(alpha: 0.15),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: const Text(
+                            'Este efeito continua ate ser cancelado!',
+                            style: TextStyle(
+                              color: Color(0xFF9C27B0),
+                              fontStyle: FontStyle.italic,
                             ),
                           ),
                         ),
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        '${currentChallenge.challenge.shots} shot(s)',
-                        style: const TextStyle(
-                          color: Color(0xFFFF6D00),
-                          fontWeight: FontWeight.bold,
+
+                      // Bottoms Up - show special label
+                      if (challenge.isBottomsUp)
+                        Container(
+                          margin: const EdgeInsets.only(top: 16),
+                          padding: const EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFFF44336).withValues(alpha: 0.15),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: const Text(
+                            'Drink it all! Sem desculpas!',
+                            style: TextStyle(
+                              color: Color(0xFFF44336),
+                              fontWeight: FontWeight.bold,
+                              fontStyle: FontStyle.italic,
+                            ),
+                          ),
                         ),
-                      ),
                     ],
                   ),
                 ),
@@ -307,8 +390,8 @@ class _GameScreenState extends State<GameScreen> {
                   ),
                   const SizedBox(height: 12),
                   _StatRow(
-                    label: 'Total de shots',
-                    value: '${currentRound.totalShots}',
+                    label: 'Total de goles',
+                    value: '${currentRound.totalSips}',
                     valueColor: const Color(0xFFFF6D00),
                   ),
                   const SizedBox(height: 12),

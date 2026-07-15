@@ -14,6 +14,7 @@ class GameProvider extends ChangeNotifier {
   String? _error;
   int _currentChallengeIndex = 0;
   GameMode _currentGameMode = GameMode.normal;
+  List<ActiveVirus> _activeViruses = [];
 
   GameRound? get currentRound => _currentRound;
   List<GameRound> get gameHistory => _gameHistory;
@@ -21,6 +22,7 @@ class GameProvider extends ChangeNotifier {
   String? get error => _error;
   int get currentChallengeIndex => _currentChallengeIndex;
   GameMode get currentGameMode => _currentGameMode;
+  List<ActiveVirus> get activeViruses => _activeViruses;
 
   GameProvider() {
     loadGameHistory();
@@ -46,6 +48,7 @@ class GameProvider extends ChangeNotifier {
     _isLoading = true;
     _error = null;
     _currentGameMode = mode;
+    _activeViruses = [];
     notifyListeners();
 
     try {
@@ -53,18 +56,35 @@ class GameProvider extends ChangeNotifier {
         throw Exception('Selecione pelo menos um jogador');
       }
 
-      // Load challenges if not loaded
       if (ChallengeService.challenges.isEmpty) {
         await ChallengeService.loadChallenges();
       }
 
-      // Generate challenges based on game mode
-      final challenges = _generateChallengesForRound(players, mode, customTurns: customTurns);
+      final config = mode == GameMode.custom
+          ? GameModeConfig.getCustomConfig(customTurns)
+          : GameModeConfig.getConfig(mode);
+      final totalChallenges = config.getTotalChallenges(players.length);
+
+      // Generate a shuffled deck of challenges
+      final deck = ChallengeService.generateDeck(totalChallenges);
+
+      // Shuffle players for random order
+      final shuffledPlayers = List<Player>.from(players)..shuffle(Random());
+
+      // Assign challenges to players
+      final roundChallenges = <RoundChallenge>[];
+      for (int i = 0; i < deck.length; i++) {
+        final player = shuffledPlayers[i % shuffledPlayers.length];
+        roundChallenges.add(RoundChallenge(
+          challenge: deck[i],
+          assignedPlayer: player,
+        ));
+      }
 
       _currentRound = GameRound(
         id: const Uuid().v4(),
         players: players,
-        challenges: challenges,
+        challenges: roundChallenges,
       );
 
       await StorageService.addGameRound(_currentRound!);
@@ -76,31 +96,6 @@ class GameProvider extends ChangeNotifier {
       _isLoading = false;
       notifyListeners();
     }
-  }
-
-  List<RoundChallenge> _generateChallengesForRound(List<Player> players, GameMode mode, {int customTurns = 4}) {
-    final challenges = <RoundChallenge>[];
-    final config = mode == GameMode.custom
-        ? GameModeConfig.getCustomConfig(customTurns)
-        : GameModeConfig.getConfig(mode);
-    final numChallenges = config.getTotalChallenges(players.length);
-
-    // Shuffle players for random order
-    final shuffledPlayers = List<Player>.from(players)..shuffle(Random());
-
-    for (int i = 0; i < numChallenges; i++) {
-      final player = shuffledPlayers[i % shuffledPlayers.length];
-      final challenge = ChallengeService.getRandomChallenge();
-
-      if (challenge != null) {
-        challenges.add(RoundChallenge(
-          challenge: challenge,
-          assignedPlayer: player,
-        ));
-      }
-    }
-
-    return challenges;
   }
 
   RoundChallenge? getCurrentChallenge() {
@@ -122,9 +117,31 @@ class GameProvider extends ChangeNotifier {
       final currentChallenge = getCurrentChallenge();
       if (currentChallenge != null) {
         currentChallenge.complete();
+
+        // Handle virus cards
+        if (currentChallenge.challenge.isVirus) {
+          final text = currentChallenge.challenge.textPT;
+          final isStopVirus = text.toLowerCase().contains('acabou') ||
+              text.toLowerCase().contains('fim') ||
+              text.toLowerCase().contains('over');
+
+          if (isStopVirus) {
+            // Remove the most recent virus
+            if (_activeViruses.isNotEmpty) {
+              _activeViruses.removeLast();
+            }
+          } else {
+            // Add new virus
+            _activeViruses.add(ActiveVirus(
+              id: const Uuid().v4(),
+              text: text.replaceAll('{player}', currentChallenge.assignedPlayer.name),
+              assignedPlayer: currentChallenge.assignedPlayer,
+            ));
+          }
+        }
+
         _currentChallengeIndex++;
 
-        // Check if round is finished
         if (_currentChallengeIndex >= _currentRound!.challenges.length) {
           _currentRound!.endedAt = DateTime.now();
           _currentRound!.isActive = false;
@@ -153,7 +170,6 @@ class GameProvider extends ChangeNotifier {
     try {
       _currentChallengeIndex++;
 
-      // Check if round is finished
       if (_currentChallengeIndex >= _currentRound!.challenges.length) {
         _currentRound!.endedAt = DateTime.now();
         _currentRound!.isActive = false;
@@ -179,12 +195,13 @@ class GameProvider extends ChangeNotifier {
     _gameHistory.add(_currentRound!);
     _currentRound = null;
     _currentChallengeIndex = 0;
+    _activeViruses = [];
     notifyListeners();
   }
 
-  int getTotalShotsInRound() {
+  int getTotalSipsInRound() {
     if (_currentRound == null) return 0;
-    return _currentRound!.totalShots;
+    return _currentRound!.totalSips;
   }
 
   int getCompletedChallengesCount() {
